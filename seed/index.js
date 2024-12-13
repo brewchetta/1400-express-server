@@ -1,6 +1,8 @@
 import mongoose from '../models/index.js'
 import Ancestry from '../models/Ancestry.js'
+import Character from '../models/Character.js'
 import ancestriesData from './ancestries-seed.json' with { type: 'json' }
+import charactersData from './characters-seed.json' with { type: 'json' }
 
 const args = process.argv
 
@@ -37,7 +39,23 @@ if (args.includes('--ancestries')) {
 /* CHARACTERS */
 
 if (args.includes('--characters')) {
-    console.log('\nCharacters will be supported in a future update')
+    const { characters } = charactersData
+    console.log('\nSeeding/reseeding characters...')
+
+    const ancestries = await Ancestry.find({})
+
+    if (!ancestries.length) {
+        console.error('Ancestries must be seeded in order to seed characters!')
+    }
+
+    await Character.deleteMany({})
+
+    for (let i = 0; i < characters.length; i++) {
+        const relatedAncestry = await Ancestry.findOne({name: characters[i].ancestry})
+        characters[i].ancestry = relatedAncestry._id
+        const character = await Character.create(characters[i])
+        console.log(`Created ${character.name} - ${character._id}`)
+    }
 }
 
 

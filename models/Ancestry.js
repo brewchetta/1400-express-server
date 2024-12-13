@@ -8,13 +8,7 @@ const ancestrySchema = new Schema({
     spells: Number,
     tags: [ String ],
     rules: String,
-    updatedAt: Date,
-    createdAt: { 
-        type: Date, 
-        default: () => Date.now(), 
-        immutable: true,
-    },
-  });
+});
 
 const Ancestry = model('Ancestry', ancestrySchema)
 

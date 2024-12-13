@@ -1,0 +1,19 @@
+{
+    "characters": [
+        {
+            "name": "Elrond",
+            "ancestry": "elf",
+            "quirk": "Stern"
+        },
+        {
+            "name": "Gandalf",
+            "ancestry": "human",
+            "quirk": "weird"
+        },
+        {
+            "name": "Bilbo",
+            "ancestry": "dwarf",
+            "quirk": "larcenous"
+        }
+    ]
+}

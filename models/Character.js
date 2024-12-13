@@ -10,17 +10,25 @@ const characterSchema = new Schema({
       type: SchemaTypes.ObjectId,
       ref: 'Ancestry'
     },
-    updatedAt: Date,
-    createdAt: { 
-        type: Date, 
-        default: () => Date.now(), 
-        immutable: true,
-    },
-  });
+    skills: [{
+      name: String,
+      diceSize: Number
+    }],
+    spells: [ String ],
+    rituals: [ String ],
+    items: [{
+      key: String,
+      name: String,
+      durability: Number,
+      maxDurability: Number,
+      tags: [ String ],
+      special: String
+    }]
+  }, {timestamps: true});
 
 const Character = model('Character', characterSchema)
 
-Character.skills = [
+Character.acceptedSkillNames = [
   "Arcane Lore",
   "Climbing",
   "Cooking",
