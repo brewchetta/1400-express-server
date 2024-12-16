@@ -1,8 +1,10 @@
 import mongoose from '../models/index.js'
 import Ancestry from '../models/Ancestry.js'
 import Character from '../models/Character.js'
+import ItemTemplate from '../models/ItemTemplate.js'
 import ancestriesData from './ancestries-seed.json' with { type: 'json' }
 import charactersData from './characters-seed.json' with { type: 'json' }
+import itemsData from './items-seed.json' with { type: 'json' }
 
 const args = process.argv
 
@@ -16,6 +18,7 @@ if (args.includes('-h') || args.includes('--help') || args.length == 2) {
         '\n\nThese can include:',
         '\n  --ancestries',
         '\n  --characters',
+        '\n  --items',
     )
     process.exit()
 }
@@ -32,6 +35,21 @@ if (args.includes('--ancestries')) {
     for (let i = 0; i < ancestries.length; i++) {
         const ancestry = await Ancestry.create(ancestries[i])
         console.log(`Created ${ancestry.name} - ${ancestry._id}`)
+    }
+}
+
+
+/* ITEM TEMPLATES */
+
+if (args.includes('--items')) {
+    const { items } = itemsData
+    console.log('\nSeeding/reseeding item templates...')
+
+    await ItemTemplate.deleteMany({})
+
+    for (let i = 0; i < items.length; i++) {
+        const item = await ItemTemplate.create(items[i])
+        console.log(`Created ${item.name} - ${item._id}`)
     }
 }
 

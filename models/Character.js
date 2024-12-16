@@ -21,6 +21,7 @@ const characterSchema = new Schema({
       name: String,
       durability: Number,
       maxDurability: Number,
+      cost: Number,
       tags: [ String ],
       special: String
     }]
