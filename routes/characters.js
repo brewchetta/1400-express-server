@@ -9,7 +9,7 @@ const router = express.Router();
 /* GET /characters/:id */
 router.get('/:id', async (req, res, next) => {
   try {
-    const character = await Character.findById(req.params.id).populate('ancestry').exec()
+    const character = await Character.findById(req.params.id).populate('ancestry').populate('trainings').exec()
     if (checkExistence(character, res, next)) {
       res.json(character)
     }

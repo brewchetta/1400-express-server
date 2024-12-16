@@ -111,18 +111,23 @@ if (args.includes('--trainings')) {
     const seededTrainings = {}
 
     for (let i = 0; i < trainings.length; i++) {
-        const key = toCamelCase(trainings[i].name)
-
+        
         // add prerequisites from previously seeded trainings
         if (trainings[i].prereqs) {
-            trainings[i].prerequisites = trainings[i].prereqs.map(p => seededTrainings[key]?._id)
+            console.log(`${trainings[i].name} training prereqs: `, trainings[i].prereqs.join())
+            trainings[i].prerequisites = trainings[i].prereqs.map(p => seededTrainings[p]?._id)
         }
+        
+        const key = toCamelCase(trainings[i].name)
 
         const training = await Training.create({ ...trainings[i], key })
+        console.log(seededTrainings)
+
         seededTrainings[training.key] = training
 
         console.log(`Created ${training.name} - ${training._id}`)
     }
+
 }
 
 

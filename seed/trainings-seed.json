@@ -5,18 +5,6 @@
             "description": "You can mend damaged armor without the aid of an artisan. Each square of durability takes an hour to mend."
         },
         {
-            "name": "Bloodthirsty",
-            "description": "Whenever anything dies by your hand you regain your Luck Dice."
-        },
-        {
-            "name": "Brawler",
-            "description": "You get +1 to Melee Combat when you aren't armed with weapons."
-        },
-        {
-            "name": "Chef",
-            "description": "When describing an end of day meal, roll for a Cooking challenge. On a 3+, all players regain their Luck Dice."
-        },
-        {
             "name": "Disciple",
             "description": "Whenever you heal or aid someone you regain your Luck Dice."
         },
