@@ -11,19 +11,32 @@ const characterSchema = new Schema({
       ref: 'Ancestry'
     },
     skills: [{
-      name: String,
-      diceSize: Number
+      name: { type: String, required: true },
+      diceSize: { type: Number, required: true }
     }],
-    spells: [ String ],
-    rituals: [ String ],
+    spells: [{
+      key: { type: String, required: true },
+      name: { type: String, required: true },
+      cost: Number
+    }],
+    rituals: [{
+      key: { type: String, required: true },
+      name: { type: String, required: true },
+      cost: Number
+    }],
     items: [{
-      key: String,
-      name: String,
+      key: { type: String, required: true },
+      name: { type: String, required: true },
       durability: Number,
       maxDurability: Number,
       cost: Number,
       tags: [ String ],
-      special: String
+      special: String,
+      rules: { type: String, default: 'core' }
+    }],
+    trainings: [{
+      type: SchemaTypes.ObjectId,
+      ref: 'Training'
     }]
   }, {timestamps: true});
 

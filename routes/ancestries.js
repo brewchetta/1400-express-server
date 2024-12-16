@@ -48,7 +48,7 @@ router.get('/', async (req, res, next) => {
 // router.delete('/:name', async (req, res, next) => {
 //   const ancestry = await Ancestry.findOne({name: req.params.name}).exec()
 //   if (checkExistence(ancestry, res, next)) {
-//     await Ancestry.deleteOne({name: titleCase(req.params.name)})
+//     await Ancestry.deleteOne({name: toTitleCase(req.params.name)})
 //     res.status(202).json({status: 202, message: "Deleted", item: ancestry})
 //   }
 // })

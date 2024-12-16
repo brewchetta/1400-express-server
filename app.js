@@ -5,8 +5,11 @@ import logger from 'morgan'
 import dotenv from 'dotenv'
 
 import indexRouter from './routes/index.js'
-import charactersRouter from './routes/characters.js'
 import ancestriesRouter from './routes/ancestries.js'
+import charactersRouter from './routes/characters.js'
+import itemsRouter from './routes/items.js'
+import spellsRouter from './routes/spells.js'
+import ritualsRouter from './routes/rituals.js'
 
 import mongoose from './models/index.js'
 
@@ -22,8 +25,11 @@ app.use(cookieParser());
 
 
 app.use('/', indexRouter);
-app.use('/characters', charactersRouter);
 app.use('/ancestries', ancestriesRouter);
+app.use('/characters', charactersRouter);
+app.use('/items', itemsRouter);
+app.use('/rituals', ritualsRouter);
+app.use('/spells', spellsRouter);
 
 app.use((err, req, res, next) => {
     res.json({

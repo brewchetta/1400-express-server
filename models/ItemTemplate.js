@@ -7,7 +7,8 @@ const itemTemplateSchema = new Schema({
     maxDurability: Number,
     cost: { type: Number, default: 1 },
     tags: [ String ],
-    special: String
+    special: String,
+    rules: { type: String, default: "core" }
   });
 
 const ItemTemplate = model('ItemTemplate', itemTemplateSchema)

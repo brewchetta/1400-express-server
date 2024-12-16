@@ -1,0 +1,144 @@
+{
+    "spells": [
+        {
+        "name": "Acid Cloud",
+        "cost": 2
+        },
+        {
+        "name": "Animate Object",
+        "cost": 2
+        },
+        {
+        "name": "Control Water",
+        "cost": 2
+        },
+        {
+        "name": "Darkness",
+        "cost": 2
+        },
+        {
+        "name": "Earth Spike",
+        "cost": 2
+        },
+        {
+        "name": "Elemental Shield",
+        "cost": 2
+        },
+        {
+        "name": "Fear",
+        "cost": 2
+        },
+        {
+        "name": "Fireball",
+        "cost": 2
+        },
+        {
+        "name": "Floating Hand",
+        "cost": 2
+        },
+        {
+        "name": "Fog Cloud",
+        "cost": 2
+        },
+        {
+        "name": "Freezing Beam",
+        "cost": 2
+        },
+        {
+        "name": "Friendship",
+        "cost": 2
+        },
+        {
+        "name": "Grease",
+        "cost": 2
+        },
+        {
+        "name": "Gale Wind",
+        "cost": 2
+        },
+        {
+        "name": "Haste",
+        "cost": 2
+        },
+        {
+        "name": "Invisibility",
+        "cost": 2
+        },
+        {
+        "name": "Light",
+        "cost": 2
+        },
+        {
+        "name": "Levitate Other",
+        "cost": 2
+        },
+        {
+        "name": "Magic Guide",
+        "cost": 2
+        },
+        {
+        "name": "Magic Messenger",
+        "cost": 2
+        },
+        {
+        "name": "Magic Swarm",
+        "cost": 2
+        },
+        {
+        "name": "Mist Form",
+        "cost": 2
+        },
+        {
+        "name": "Pacify",
+        "cost": 2
+        },
+        {
+        "name": "Petrify",
+        "cost": 2
+        },
+        {
+        "name": "Resize Creature",
+        "cost": 2
+        },
+        {
+        "name": "Remote Viewing",
+        "cost": 2
+        },
+        {
+        "name": "Rot And Sickness",
+        "cost": 2
+        },
+        {
+        "name": "Shatter",
+        "cost": 2
+        },
+        {
+        "name": "Silence",
+        "cost": 2
+        },
+        {
+        "name": "Tangling Vines",
+        "cost": 2
+        },
+        {
+        "name": "Thunder Bolt",
+        "cost": 2
+        },
+        {
+        "name": "Telepathy",
+        "cost": 2
+        },
+        {
+        "name": "Visual Illusion",
+        "cost": 2
+        },
+        {
+        "name": "Wings of Flight",
+        "cost": 2
+        },
+        {
+        "name": "Word of Command",
+        "cost": 2
+        }
+    ]
+  }

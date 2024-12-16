@@ -1,0 +1,97 @@
+{ 
+    "rituals": [
+        {
+            "name": "Alarm Ward",
+            "cost": 5
+        },
+        {
+            "name": "Arcane Lock",
+            "cost": 5
+        },
+        {
+            "name": "Change Weather",
+            "cost": 10
+        },
+        {
+            "name": "Circle Of Plant Growth",
+            "cost": 5
+        },
+        {
+            "name": "Circle Of Imprisonment",
+            "cost": 10
+        },
+        {
+            "name": "Exploding Glyph",
+            "cost": 10
+        },
+        {
+            "name": "Healing Ritual",
+            "cost": 10
+        },
+        {
+            "name": "Magic Feast",
+            "cost": 5
+        },
+        {
+            "name": "Illusionary Place",
+            "cost": 10
+        },
+        {
+            "name": "Open Demiplane",
+            "cost": 10
+        },
+        {
+            "name": "Raise Undead Servant",
+            "cost": 10
+        },
+        {
+            "name": "Scrying Ritual",
+            "cost": 5
+        },
+        {
+            "name": "Seance",
+            "cost": 5
+        },
+        {
+            "name": "Simulacrum",
+            "cost": 10
+        },
+        {
+            "name": "Speak Languages",
+            "cost": 5
+        },
+        {
+            "name": "Summon Elemental",
+            "cost": 10
+        },
+        {
+            "name": "Summon Hostile Demon",
+            "cost": 10
+        },
+        {
+            "name": "Summon Magic Horse",
+            "cost": 5
+        },
+        {
+            "name": "Teleportation",
+            "cost": 10
+        },
+        {
+            "name": "Ward Against Demons",
+            "cost": 5
+        },
+        {
+            "name": "Ward Against Magic",
+            "cost": 5
+        },
+        {
+            "name": "Ward Against Undead",
+            "cost": 5
+        },
+        {
+            "name": "Water Breathing",
+            "cost": 5
+        }
+    ]
+  
+}

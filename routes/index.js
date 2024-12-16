@@ -9,6 +9,12 @@ router.get('/', function(req, res, next) {
       'GET POST /characters',
       'GET PATCH DELETE /characters/:id',
       'GET /ancestries OPTIONAL QUERY name',
+      'GET /items OPTIONAL QUERY name',
+      'GET /items/:id',
+      'GET /spells OPTIONAL QUERY name',
+      'GET /spells/:id',
+      'GET /rituals OPTIONAL QUERY name',
+      'GET /rituals/:id'
     ]
   })
 });
