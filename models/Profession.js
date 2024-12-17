@@ -1,14 +1,25 @@
-import  { Schema, model } from 'mongoose'
+import  { Schema, SchemaTypes, model } from 'mongoose'
 
 const professionSchema = new Schema({
-    name: String,
-    updatedAt: Date,
-    createdAt: { 
-        type: Date, 
-        default: () => Date.now(), 
-        immutable: true,
-    },
-  });
+  key: { type: String, required: true },
+  name: { type: String, required: true },
+  coreskill: String,
+  skills: [ String ],
+  skillSlots: Number,
+  spells: Number,
+  equipmentGuaranteed: [{
+    type: SchemaTypes.ObjectId,
+    ref: 'EquipmentTemplate'
+  }],
+  equipmentGroups: [ String ],
+  description: String,
+  specialText: String,
+  expertise: Number,
+  trainings: [{
+    type: SchemaTypes.ObjectId,
+    ref: 'Training'
+  }]
+});
 
 const Profession = model('Profession', professionSchema)
 

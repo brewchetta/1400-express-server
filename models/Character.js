@@ -1,6 +1,10 @@
 import  { Schema, SchemaTypes, model } from 'mongoose'
 
 const characterSchema = new Schema({
+    user: {
+      type: SchemaTypes.ObjectId,
+      ref: 'User'
+    },
     name: { type: String, required: true },
     quirk: String,
     history: String,

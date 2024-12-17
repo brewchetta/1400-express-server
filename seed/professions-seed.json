@@ -1,0 +1,67 @@
+{
+    "professions": [
+        {
+            "name": "Bard",
+            "coreskill": "Performing",
+            "skills": ["Melee Combat", "Deception", "Disguise", "Reading People", "Persuasion"],
+            "skillSlots": 3,
+            "spells": 2,
+            "equipmentGuaranteed": ["instrument", "backpack", "waterskin"],
+            "description": "Increase (d8) Performing and any 3 of Melee Combat, Deception, Disguise, Reading People, Persuasion. Learn 2 spells. Take an instrument.",
+            "trainings": ["magicalMusician"]
+        },
+        {
+            "name": "Mage",
+            "coreskill": "Spellcasting",
+            "skills": ["Arcane Lore", "History Lore", "Nature Lore", "Religious Lore", "Handwriting"],
+            "skillSlots": 2,
+            "spells": 5,
+            "equipmentGuaranteed": ["backpack", "waterskin"],
+            "description": "Increase (d8) Spellcasting and any 2 of any kind of Lore or Handwriting. Learn 5 spells.",
+            "trainings": ["mageInitiate"]
+        },
+        {
+            "name": "Priest",
+            "coreskill": "Religious Lore",
+            "skills": ["Melee Combat", "Medicine", "Reading People"],
+            "skillSlots": 1,
+            "spells": 3,
+            "equipmentGuaranteed": ["backpack", "waterskin"],
+            "equipmentGroups": ["Light Weapon", "Tool"],
+            "description": "Increase (d8) Religious Lore and any 1 of Melee Combat, Medicine, Reading People. Learn 3 spells. Take a weapon or a tool.",
+            "trainings": ["disciple"]
+        },
+        {
+            "name": "Explorer",
+            "coreskill": "Tracking",
+            "skills": ["Ranged Combat", "Running/Jumping", "Sneaking", "Foraging", "Melee Combat", "Trapping", "Climbing", "Nature Lore"],
+            "skillSlots": 3,
+            "equipmentGroups": ["Weapon"],
+            "equipmentGuaranteed": ["backpack", "waterskin"],
+            "description": "Increase (d8) Tracker and any 3 of Ranged Combat, Running/Jumping, Sneaking, Foraging, Melee Combat, Trapping, Climbing, Nature Lore. Take a weapon.",
+            "trainings": ["wanderer"]
+        },
+        {
+            "name": "Skulker",
+            "coreskill": "Sneaking",
+            "skills": ["Trapping", "Sleight of Hand", "Deception", "Disguise", "Climbing"],
+            "skillSlots": 3,
+            "equipmentGuaranteed": ["backpack", "waterskin"],
+            "equipmentGroups": ["Light Weapon", "Tool"],
+            "expertise": 2,
+            "specialText": "Increase two skills an additional time (d10)",
+            "description": "Increase (d8) Sneaking and any 3 of Trapping, Sleight of Hand, Deception, Disguise, Climbing. Then increase (d10) two of them again. Take a light weapon and a tool.",
+            "trainings": ["skulkerThief"]
+        },
+        {
+            "name": "Warrior",
+            "coreskill": "Melee Combat",
+            "skills": ["Intimidation", "Running/Jumping", "Ranged Combat", "Riding"],
+            "skillSlots": 2,
+            "equipmentGuaranteed": ["backpack", "waterskin"],
+            "equipmentGroups": ["Armour", "Weapon"],
+            "description": "Increase (d8) Melee Combat and any 2 of Intimidation, Running/Jumping, Ranged Combat, Riding. Can carry an additional heavy item without hindrance. Take a piece of armour and a weapon.",
+            "trainings": ["warrior"]
+        }
+    ]
+}

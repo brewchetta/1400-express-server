@@ -6,7 +6,7 @@
         },
         {
             "name": "Disciple",
-            "description": "Whenever you heal or aid someone you regain your Luck Dice."
+            "description": "You can use Religious Lore instead of Spellcasting when casting spells."
         },
         {
             "name": "Abjurer of Evil",
@@ -28,7 +28,7 @@
         },
         {
             "name": "Magical Musician",
-            "description": "You can use Performing instead of Spellcasting when casting spells. This only works if you sing or use an instrument as part of casting the spell."
+            "description": "You can use Perform instead of Spellcasting when casting spells. This only works if you sing or use an instrument as part of casting the spell."
         },
         {
             "name": "Mage Initiate",
@@ -45,15 +45,15 @@
             "prereqs": ["mageAdept"]
         },
         {
-            "name": "Pack Mule",
-            "description": "You can carry an additional Heavy Item."
-        },
-        {
             "name": "Ritualist",
             "description": "If you are part of a Ritual and you aren't injured, you can use your own blood in the place of the Ritual Item. Doing so injures you."
         },
         {
-            "name": "Skulker Thief",
+            "name": "Strong",
+            "description": "You can carry an additional Heavy Item."
+        },
+        {
+            "name": "Thief",
             "description": "Whenever you steal something valuable you regain your Luck Dice."
         },
         {
@@ -65,12 +65,12 @@
             "description": "Whenever you find something lost to time or undiscovered you regain your Luck Dice."
         },
         {
-            "name": "Wanderer Druid",
+            "name": "Druid",
             "description": "On gaining this training choose an animal no larger than a bear and no smaller than a mouse. You can shapeshift into that animal at will.",
             "prereqs": ["wanderer"]
         },
         {
-            "name": "Wanderer Tamer",
+            "name": "Tamer",
             "description": "You have an animal companion who joins your adventure. The companion has its own health, personality and motives however it considers you a friend so long as you treat it well. You may also instead have a number of small animal companions like sparrows or squirrels.",
             "prereqs": ["wanderer"]
         },

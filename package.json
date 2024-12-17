@@ -9,6 +9,7 @@
     "seed": "node seed/index.js --ancestries --items --characters"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.4.7",
