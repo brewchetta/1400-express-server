@@ -11,6 +11,7 @@ import itemsRouter from './routes/items.js'
 import spellsRouter from './routes/spells.js'
 import ritualsRouter from './routes/rituals.js'
 import trainingsRouter from './routes/trainings.js'
+import usersRouter from './routes/users.js'
 
 import mongoose from './models/index.js'
 
@@ -32,6 +33,7 @@ app.use('/items', itemsRouter);
 app.use('/rituals', ritualsRouter);
 app.use('/spells', spellsRouter);
 app.use('/trainings', trainingsRouter);
+app.use('/users', usersRouter);
 
 app.use((err, req, res, next) => {
     res.json({
