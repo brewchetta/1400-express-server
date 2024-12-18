@@ -1,6 +1,8 @@
 import  { Schema, SchemaTypes, model } from 'mongoose'
 import bcrypt from 'bcrypt'
 
+import Character from './Character.js'
+
 const saltRounds = 10
 
 const userSchema = new Schema({
@@ -19,7 +21,6 @@ userSchema.pre('save', function(next) {
     // ignore if password is unmodified
     if (!user.isModified('password')) return
     
-    console.log("FIRING SAVE!")
     // otherwise generate salt and apply to password hash
     bcrypt.genSalt(saltRounds, function(err, salt) {
         if (err) return next(err)
@@ -40,6 +41,21 @@ userSchema.methods.comparePassword = async function(candidatePassword, cb) {
         if (err) return cb(err);
         cb(null, isMatch);
     })
+}
+
+userSchema.methods.serialize = async function() {
+    const characters = await Character.find({user: this._id})
+    return { 
+        _id: this._id, 
+        username: this.username, 
+        email: this.email,
+        // password: this.password,
+        profilePicURL: this.profilePicURL, 
+        characters,
+        createdAt: this.createdAt, 
+        updatedAt: this.updatedAt, 
+        // __v: this.__v 
+    }
 }
         
 

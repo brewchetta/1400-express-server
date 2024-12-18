@@ -1,6 +1,6 @@
 import express from 'express'
 import Ancestry from '../models/Ancestry.js'
-import { checkExistence } from '../helpers.js'
+import { checkExistence } from './_routeHelpers.js'
 
 const router = express.Router();
 

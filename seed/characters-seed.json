@@ -14,6 +14,16 @@
             "name": "Gimli",
             "ancestry": "dwarf",
             "quirk": "boisterous"
+        },
+        {
+            "name": "Frodo Baggins",
+            "ancestry": "dwarf",
+            "quirk": "haunted"
+        },
+        {
+            "name": "Mister Uruk Hai",
+            "ancestry": "orc",
+            "quirk": "angry"
         }
     ]
 }

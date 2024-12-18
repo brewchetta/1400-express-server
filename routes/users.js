@@ -1,28 +1,19 @@
 import express from 'express'
-import Character from '../models/Character.js'
 import User from '../models/User.js'
-import { checkExistence } from '../helpers.js';
-import jwt from 'jsonwebtoken'
+import { checkExistence, getCurrentUser, generateToken } from './_routeHelpers.js';
 
 const router = express.Router()
-
-async function getCurrentUser(req) {
-    const token = req.headers.authorization.split(' ')[1]
-    if (token) {
-        const decodedToken = jwt.verify( token, process.env.SECRET_KEY )
-        return await User.findById({_id: decodedToken.id}).exec()
-    }
-}
 
 
 /* GET /users/current */
 router.get('/current', async (req, res, next) => {
     try {
         const user = await getCurrentUser(req)
-        if (checkExistence(user, res, next)) {
-            const characters = Character.find({user_id: user._id})
-            user.characters = characters
-            res.json(user)
+        if (user) {
+            const serializedUser = await user.serialize()
+            res.json(serializedUser)
+        } else {
+            res.status(204).json({})
         }
     } catch (err) {
         res.status(500)
@@ -36,9 +27,8 @@ router.get('/:id', async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id).exec()
     if (checkExistence(user, res, next)) {
-        const characters = Character.find({user_id: user._id})
-        user.characters = characters
-        res.json(user)
+        const serializedUser = await user.serialize()
+        res.json(serializedUser)
     }
   } catch (err) {
     res.status(500)
@@ -51,13 +41,9 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const newUser = await User.create(req.body)
-    // TODO: Find way to remove password field from returned user without finding again
-    const filteredUser = await User.findById({_id: newUser.id})
-    const token = jwt.sign(
-        { id: filteredUser._id }, 
-        process.env.SECRET_KEY,
-        { expiresIn: "24h" }) 
-    res.status(201).json({ status: 201, message: "Success", result: filteredUser, token })
+    const serializedUser = await newUser.serialize()
+    req.session.token = generateToken(newUser._id)
+    res.status(201).json({ status: 201, message: "Success", result: serializedUser })
 
   } catch (err) {
     res.status(400)
@@ -71,7 +57,7 @@ router.post('/login', async(req, res, next) => {
     const { username, password } = req.body
     const user = await User.findOne({ username }).select('+password').exec()
 
-    if ( checkExistence(user, res, next) ) {
+    if ( user ) {
         user.comparePassword(password, async (error, isMatch) => {
             
             if (error) return next(error)
@@ -82,22 +68,32 @@ router.post('/login', async(req, res, next) => {
             }
 
             // TODO: Find way to remove password field from returned user without finding again
-            const validatedUser = await User.findById({ _id: user._id }).exec()
-
-            const token = jwt.sign(
-                { _id: validatedUser._id, username: validatedUser.username }, 
-                process.env.SECRET_KEY,
-                { expiresIn: "24h" }
-            )
-            res.json({ success: true, validatedUser, token })
+            req.session.token = generateToken(user._id)
+            const serializedUser = await user.serialize()
+            res.json({ success: true, serializedUser })
         })
+    } else {
+        res.status(401)
+        return next( Error("Invalid username or password") )
     }
 })
 
 
-/* PATCH /users/:id */
-router.patch('/:id', async (req, res, next) => {
-    const user = await User.findById(req.params.id).exec()
+/* DELETE /users/logout */
+router.delete('/logout', async(req, res, next) => {
+    req.session.destroy(err => {
+        if (err) {
+            res.status(500).json({error: err.message})
+        } else {
+            res.status(204).json({})
+        }
+    })
+})
+
+
+/* PATCH /users/current */
+router.patch('/current', async (req, res, next) => {
+    const user = await getCurrentUser(req)
     if (checkExistence(user, res, next)) {
         try {
             // iterate on keys and update
@@ -105,7 +101,8 @@ router.patch('/:id', async (req, res, next) => {
 
             // save and return
             await user.save()
-            res.status(202).json({status: 202, message: "Success", result: user})
+            const serializedUser = user.serialize()
+            res.status(202).json({status: 202, message: "Success", result: serializedUser})
         } catch (error) {
             res.status(400)
             next(error)
@@ -114,9 +111,9 @@ router.patch('/:id', async (req, res, next) => {
 })
 
 
-/* DELETE /users/:id */
-router.delete('/:id', async (req, res, next) => {
-  const user = await User.findById(req.params.id).exec()
+/* DELETE /users/current */
+router.delete('/current', async (req, res, next) => {
+  const user = await getCurrentUser(req)
   if (checkExistence(user, res, next)) {
     await User.deleteOne({_id: req.params.id})
     res.status(202).json({status: 202, message: "Success", result: user})

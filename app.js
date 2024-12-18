@@ -3,6 +3,10 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 import dotenv from 'dotenv'
+import session from 'express-session'
+import MongoStore from 'connect-mongo'
+
+import { MONGO_URL } from './mongo-config.js'
 
 import indexRouter from './routes/index.js'
 import ancestriesRouter from './routes/ancestries.js'
@@ -22,6 +26,14 @@ const app = express();
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(session({
+    secret: 'TODO-ADD-SECRET',
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+        mongoUrl: MONGO_URL
+    })
+}))
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 

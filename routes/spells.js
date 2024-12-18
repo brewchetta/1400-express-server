@@ -1,6 +1,6 @@
 import express from 'express'
 import Spell from '../models/Spell.js'
-import { checkExistence } from '../helpers.js'
+import { checkExistence } from './_routeHelpers.js'
 
 const router = express.Router();
 

@@ -1,6 +1,6 @@
 import express from 'express'
 import ItemTemplate from '../models/ItemTemplate.js'
-import { checkExistence } from '../helpers.js'
+import { checkExistence } from './_routeHelpers.js'
 
 const router = express.Router();
 

@@ -1,7 +1,7 @@
 import express from 'express'
 import Character from '../models/Character.js'
 import Ancestry from '../models/Ancestry.js'
-import { checkExistence } from '../helpers.js';
+import { checkExistence, getCurrentUser } from './_routeHelpers.js';
 
 const router = express.Router();
 

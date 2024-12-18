@@ -6,6 +6,7 @@ import ItemTemplate from '../models/ItemTemplate.js'
 import Ritual from '../models/Ritual.js'
 import Spell from '../models/Spell.js'
 import Training from '../models/Training.js'
+import User from '../models/User.js'
 
 import ancestriesData from './ancestries-seed.json' with { type: 'json' }
 import charactersData from './characters-seed.json' with { type: 'json' }
@@ -13,8 +14,9 @@ import itemsData from './items-seed.json' with { type: 'json' }
 import ritualsData from './rituals-seed.json' with { type: 'json' }
 import spellsData from './spells-seed.json' with { type: 'json' }
 import trainingsData from './trainings-seed.json' with { type: 'json' }
+import usersData from './users-seed.json' with { type: 'json' }
 
-import { toCamelCase } from '../helpers.js'
+import { toCamelCase } from '../_commonHelpers.js'
 
 const args = process.argv
 
@@ -121,13 +123,30 @@ if (args.includes('--trainings')) {
         const key = toCamelCase(trainings[i].name)
 
         const training = await Training.create({ ...trainings[i], key })
-        console.log(seededTrainings)
 
         seededTrainings[training.key] = training
 
         console.log(`Created ${training.name} - ${training._id}`)
     }
 
+}
+
+
+/* USERS */
+
+if (args.includes('--users')) {
+    const { users } = usersData
+
+    console.log('\nSeeding/reseeding users...')
+
+    await User.deleteMany({})
+
+    for (let i = 0; i < users.length; i++) {
+        // delete specific users from seed instead of all
+        const user = await User.create(users[i])
+        
+        console.log(`Created ${user.username} - ${user._id}`)
+    }
 }
 
 
@@ -138,16 +157,24 @@ if (args.includes('--characters')) {
     console.log('\nSeeding/reseeding characters...')
 
     const ancestries = await Ancestry.find({})
-
+    
     if (!ancestries.length) {
         console.error('Ancestries must be seeded in order to seed characters!')
     }
+    
+    const users = await User.find({})
 
+    if (!users.length) {
+        console.error('Users must be seeded in order to seed characters!')
+    }
+    
     await Character.deleteMany({})
 
     for (let i = 0; i < characters.length; i++) {
         const relatedAncestry = await Ancestry.findOne({name: characters[i].ancestry})
         characters[i].ancestry = relatedAncestry._id
+        const relatedUser = users[Math.floor(Math.random() * users.length)]
+        characters[i].user = relatedUser._id
         const character = await Character.create(characters[i])
         console.log(`Created ${character.name} - ${character._id}`)
     }

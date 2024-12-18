@@ -1,0 +1,22 @@
+{
+    "users": [
+        {
+            "username": "Agnes",
+            "email": "agnes@nookindustries.com",
+            "profilePicURL": "https://static.wikia.nocookie.net/animalcrossing/images/e/e8/NH-Agnes_poster.png/revision/latest/scale-to-width-down/100?cb=20200410185748",
+            "password": "123"
+        },
+        {
+            "username": "Ankha",
+            "email": "ankha@nookindustries.com",
+            "profilePicURL": "https://static.wikia.nocookie.net/animalcrossing/images/9/9a/NH-Ankha_poster.png/revision/latest/scale-to-width-down/100?cb=20200410182618",
+            "password": "123"
+        },
+        {
+            "username": "Cherry",
+            "email": "cherry@nookindustries.com",
+            "profilePicURL": "https://static.wikia.nocookie.net/animalcrossing/images/6/6e/NH-Cherry_poster.png/revision/latest/scale-to-width-down/100?cb=20200522045634",
+            "password": "123"
+        }
+    ]
+}

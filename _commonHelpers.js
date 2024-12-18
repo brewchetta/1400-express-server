@@ -1,9 +1,11 @@
+/* i am not title cased --> I Am Not Title Cased */
 export function toTitleCase(str) {
     return str.toLowerCase().split(' ')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
 }
 
+/* i am not camel cased --> iAmNotCamelCased */
 export function toCamelCase(str) {
     const words = str.split(' ')
     for (let i = 0; i < words.length; i++) {
@@ -14,16 +16,4 @@ export function toCamelCase(str) {
         }
     }
     return words.join('')
-}
-
-export function checkExistence(item, res, next) {
-    try {
-        if (!item) {
-        throw Error('Not found')
-        }
-        return true
-    } catch (err) {
-        res.status(404)
-        next(err)
-    }
 }
