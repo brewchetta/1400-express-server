@@ -5,6 +5,7 @@ import logger from 'morgan'
 import dotenv from 'dotenv'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
+import cors from 'cors'
 
 import { MONGO_URL } from './mongo-config.js'
 
@@ -23,6 +24,8 @@ dotenv.config()
 
 const app = express();
 
+app.set('trust proxy', 'loopback') // allow localhost proxies
+app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -32,11 +35,16 @@ app.use(session({
     saveUninitialized: false,
     store: MongoStore.create({
         mongoUrl: MONGO_URL
-    })
+    }),
+    cookie: {
+        secure: true,
+        maxAge: 12 * 60 * 60 * 1000,
+        httpOnly: false,
+        sameSite: "strict"
+    }
 }))
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
-
 
 app.use('/', indexRouter);
 app.use('/ancestries', ancestriesRouter);
