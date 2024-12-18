@@ -21,14 +21,24 @@ router.get('/:id', async (req, res, next) => {
 
 
 /* GET /characters */
+// all characters for current user
 router.get('/', async (req, res, next) => {
-  const characters = await Character.find({}).populate('ancestry')
+  const currentUser = await getCurrentUser(req)
+  if (!currentUser) {
+    return res.status(401).json({error: "No authorized users logged in"})
+  }
+  console.log(currentUser)
+  const characters = await Character.find({user: currentUser._id}).populate('ancestry').populate('trainings')
   res.json(characters)
 });
 
 
 /* POST /characters */
 router.post('/', async (req, res, next) => {
+  const currentUser = await getCurrentUser(req)
+  if (!currentUser) {
+    return res.status(401).json({error: "No authorized users logged in"})
+  }
   try {
     // handle find ancestries
     const ancestryName = req.body.ancestry
@@ -37,7 +47,7 @@ router.post('/', async (req, res, next) => {
   
     req.body.ancestry = foundAncestry._id
 
-    const newChar = await Character.create(req.body)
+    const newChar = await Character.create({...req.body, user: currentUser._id})
     res.status(201).json({ status: 201, message: "Success", result: newChar.populate('ancestry') })
 
   } catch (err) {
@@ -49,6 +59,10 @@ router.post('/', async (req, res, next) => {
 
 /* PATCH /characters */
 router.patch('/:id', async (req, res, next) => {
+  const currentUser = await getCurrentUser(req)
+  if (!currentUser) {
+    return res.status(401).json({error: "No authorized users logged in"})
+  }
   const character = await Character.findById(req.params.id).populate('ancestry').exec()
   if (checkExistence(character, res, next)) {
     try {
@@ -68,6 +82,10 @@ router.patch('/:id', async (req, res, next) => {
 
 
 router.delete('/:id', async (req, res, next) => {
+  const currentUser = await getCurrentUser(req)
+  if (!currentUser) {
+    return res.status(401).json({error: "No authorized users logged in"})
+  }
   const character = await Character.findById(req.params.id).populate('ancestry').exec()
   if (checkExistence(character, res, next)) {
     await Character.deleteOne({_id: req.params.id})
