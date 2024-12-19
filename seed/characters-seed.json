@@ -3,27 +3,82 @@
         {
             "name": "Elrond",
             "ancestry": "elf",
-            "quirk": "Stern"
+            "quirk": "Stern",
+            "skills": [
+                {
+                    "name": "Ranged Combat",
+                    "diceSize": 8
+                },
+                {
+                    "name": "Crafting",
+                    "diceSize": 12
+                }
+            ]
         },
         {
             "name": "Gandalf",
             "ancestry": "human",
-            "quirk": "weird"
+            "quirk": "weird",
+            "skills": [
+                {
+                    "name": "Spellcasting",
+                    "diceSize": 12
+                },
+                {
+                    "name": "Reading People",
+                    "diceSize": 12
+                }
+            ]
         },
         {
             "name": "Gimli",
             "ancestry": "dwarf",
-            "quirk": "boisterous"
+            "quirk": "boisterous",
+            "skills": [
+                {
+                    "name": "Melee Combat",
+                    "diceSize": 10
+                },
+                {
+                    "name": "Swimming",
+                    "diceSize": 8
+                }
+            ]
         },
         {
             "name": "Frodo Baggins",
             "ancestry": "dwarf",
-            "quirk": "haunted"
+            "quirk": "haunted",
+            "history": "from the shire",
+            "skills": [
+                {
+                    "name": "Navigation",
+                    "diceSize": 8
+                },
+                {
+                    "name": "Climbing",
+                    "diceSize": 8
+                },
+                {
+                    "name": "Cooking",
+                    "diceSize": 10
+                }
+            ]
         },
         {
             "name": "Mister Uruk Hai",
             "ancestry": "orc",
-            "quirk": "angry"
+            "quirk": "angry",
+            "skills": [
+                {
+                    "name": "Melee Combat",
+                    "diceSize": 12
+                },
+                {
+                    "name": "Intimidation",
+                    "diceSize": 8
+                }
+            ]
         }
     ]
 }

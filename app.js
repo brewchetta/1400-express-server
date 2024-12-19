@@ -8,6 +8,7 @@ import MongoStore from 'connect-mongo'
 import cors from 'cors'
 
 import { MONGO_URL } from './mongo-config.js'
+import mongoose from './models/index.js'
 
 import indexRouter from './routes/index.js'
 import ancestriesRouter from './routes/ancestries.js'
@@ -18,7 +19,6 @@ import ritualsRouter from './routes/rituals.js'
 import trainingsRouter from './routes/trainings.js'
 import usersRouter from './routes/users.js'
 
-import mongoose from './models/index.js'
 
 dotenv.config()
 
@@ -30,14 +30,14 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(session({
-    secret: 'TODO-ADD-SECRET',
+    secret: 'TODO-ADD-SECRET', // TODO: actually add the secret you silly billy
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
         mongoUrl: MONGO_URL
     }),
     cookie: {
-        secure: true,
+        secure: false, // TODO: use process.env.NODE_ENV === 'production' here
         maxAge: 12 * 60 * 60 * 1000,
         httpOnly: false,
         sameSite: "strict"

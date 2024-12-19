@@ -2,6 +2,8 @@ import mongoose from '../models/index.js'
 
 import Ancestry from '../models/Ancestry.js'
 import Character from '../models/Character.js'
+import CharacterRitual from '../models/CharacterRitual.js'
+import CharacterSpell from '../models/CharacterSpell.js'
 import ItemTemplate from '../models/ItemTemplate.js'
 import Ritual from '../models/Ritual.js'
 import Spell from '../models/Spell.js'
@@ -167,14 +169,29 @@ if (args.includes('--characters')) {
     if (!users.length) {
         console.error('Users must be seeded in order to seed characters!')
     }
-    
+
+    const spells = await Spell.find({})
+
+    await CharacterSpell.deleteMany({})
     await Character.deleteMany({})
 
     for (let i = 0; i < characters.length; i++) {
         const relatedAncestry = await Ancestry.findOne({name: characters[i].ancestry})
         characters[i].ancestry = relatedAncestry._id
+
         const relatedUser = users[Math.floor(Math.random() * users.length)]
         characters[i].user = relatedUser._id
+
+        if (spells.length) {
+            const sp1 = spells[Math.floor(Math.random() * spells.length)]._id
+            const sp2 = spells[Math.floor(Math.random() * spells.length)]._id
+            if (sp1 !== sp2) {
+                const charSpell1 = await CharacterSpell.create({spellData: sp1._id})
+                const charSpell2 = await CharacterSpell.create({spellData: sp2._id})
+                characters[i].spells = [charSpell1._id, charSpell2._id]
+            }
+        }
+
         const character = await Character.create(characters[i])
         console.log(`Created ${character.name} - ${character._id}`)
     }

@@ -10,6 +10,9 @@ const characterSchema = new Schema({
     history: String,
     injured: { type: Boolean, default: false },
     lucky: { type: Number, default: 1 },
+    luckyMaximum: { type: Number, default: 1 },
+    hindered: { type: Boolean, default: false },
+    helped: { type: Boolean, default: false },
     ancestry: {
       type: SchemaTypes.ObjectId,
       ref: 'Ancestry'
@@ -19,14 +22,12 @@ const characterSchema = new Schema({
       diceSize: { type: Number, required: true }
     }],
     spells: [{
-      key: { type: String, required: true },
-      name: { type: String, required: true },
-      cost: Number
+      type: SchemaTypes.ObjectId,
+      ref: 'CharacterSpell'
     }],
     rituals: [{
-      key: { type: String, required: true },
-      name: { type: String, required: true },
-      cost: Number
+      type: SchemaTypes.ObjectId,
+      ref: 'CharacterRitual'
     }],
     items: [{
       key: { type: String, required: true },
@@ -41,7 +42,11 @@ const characterSchema = new Schema({
     trainings: [{
       type: SchemaTypes.ObjectId,
       ref: 'Training'
-    }]
+    }],
+    notes: {
+      type: String,
+      default: ''
+    }
   }, {timestamps: true});
 
 const Character = model('Character', characterSchema)
