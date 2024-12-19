@@ -1,7 +1,7 @@
 import  { Schema, SchemaTypes, model } from 'mongoose'
 
 const characterRitualSchema = new Schema({
-    enabled: { type: Boolean, default: true },
+    exhausted: { type: Boolean, default: false },
     ritualData: {
         type: SchemaTypes.ObjectId,
         ref: 'Ritual'

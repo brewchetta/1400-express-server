@@ -171,8 +171,10 @@ if (args.includes('--characters')) {
     }
 
     const spells = await Spell.find({})
+    const rituals = await Ritual.find({})
 
     await CharacterSpell.deleteMany({})
+    await CharacterRitual.deleteMany({})
     await Character.deleteMany({})
 
     for (let i = 0; i < characters.length; i++) {
@@ -189,6 +191,16 @@ if (args.includes('--characters')) {
                 const charSpell1 = await CharacterSpell.create({spellData: sp1._id})
                 const charSpell2 = await CharacterSpell.create({spellData: sp2._id})
                 characters[i].spells = [charSpell1._id, charSpell2._id]
+            }
+        }
+
+        if (rituals.length) {
+            const r1 = rituals[Math.floor(Math.random() * rituals.length)]._id
+            const r2 = rituals[Math.floor(Math.random() * rituals.length)]._id
+            if (r1 !== r2) {
+                const charRitual1 = await CharacterRitual.create({ritualData: r1._id})
+                const charRitual2 = await CharacterRitual.create({ritualData: r2._id})
+                characters[i].rituals = [charRitual1._id, charRitual2._id]
             }
         }
 
