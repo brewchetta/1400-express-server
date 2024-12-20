@@ -6,8 +6,8 @@ const characterSchema = new Schema({
       ref: 'User'
     },
     name: { type: String, required: true },
-    quirk: String,
-    history: String,
+    quirk: { type: String, default: '' },
+    history: { type: String, default: '' },
     injured: { type: Boolean, default: false },
     lucky: { type: Number, default: 1 },
     luckyMaximum: { type: Number, default: 1 },

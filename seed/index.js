@@ -205,6 +205,8 @@ if (args.includes('--characters')) {
             }
         }
 
+        characters[i].gold = Math.floor(Math.random() * 20)
+
         const character = await Character.create(characters[i])
         console.log(`Created ${character.name} - ${character._id}`)
     }
