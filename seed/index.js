@@ -182,6 +182,7 @@ if (args.includes('--characters')) {
         characters[i].ancestry = relatedAncestry._id
 
         const relatedUser = users[Math.floor(Math.random() * users.length)]
+        console.log('relatedUser: ', relatedUser.username)
         characters[i].user = relatedUser._id
 
         if (spells.length) {

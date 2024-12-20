@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
 // TODO: names query currently not working (partially due to not capitalizing)
     const training = await Training.find({...req.query}).populate('prerequisites')
-    res.json({result: training, query: req.query})
+    res.json({status: 200, result: training, query: req.query})
 });
 
 
@@ -18,7 +18,7 @@ router.get('/:id', async (req, res, next) => {
     try {
         const training = await Training.findById(req.params.id).populate('prerequisites').exec()
         if (checkExistence(training, res, next)) {
-          res.json(training)
+          res.json({status: 200, result: training})
         }
       } catch (err) {
         res.status(500)

@@ -24,7 +24,7 @@ router.get('/:id', async (req, res, next) => {
     .exec()
 
     if (checkExistence(character, res, next)) {
-      res.json(character)
+      res.json({ status: 200, result: character})
     }
   } catch (err) {
     res.status(500)
@@ -50,7 +50,7 @@ router.get('/', async (req, res, next) => {
     { path: 'rituals', model: 'CharacterRitual', populate: { path: 'ritualData', model: 'Ritual' }}, 
   ])
 
-  res.json(characters)
+  res.json({status: 200, result: characters})
 });
 
 

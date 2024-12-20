@@ -11,7 +11,7 @@ router.get('/current', async (req, res, next) => {
         const user = await getCurrentUser(req)
         if (user) {
             const serializedUser = await user.serialize()
-            res.json(serializedUser)
+            res.json({status: 200, result: serializedUser})
         } else {
             res.status(204).json({})
         }
@@ -28,7 +28,7 @@ router.get('/:id', async (req, res, next) => {
     const user = await User.findById(req.params.id).exec()
     if (checkExistence(user, res, next)) {
         const serializedUser = await user.serialize()
-        res.json(serializedUser)
+        res.json({status: 200, result: serializedUser})
     }
   } catch (err) {
     res.status(500)
@@ -43,7 +43,7 @@ router.post('/', async (req, res, next) => {
     const newUser = await User.create(req.body)
     const serializedUser = await newUser.serialize()
     req.session.token = generateToken(newUser._id)
-    res.status(201).json({ status: 201, message: "Success", result: serializedUser })
+    res.status(201).json({ status: 201, result: serializedUser })
 
   } catch (err) {
     res.status(400)
@@ -70,7 +70,7 @@ router.post('/login', async(req, res, next) => {
             // TODO: Find way to remove password field from returned user without finding again
             req.session.token = generateToken(user._id)
             const serializedUser = await user.serialize()
-            res.json({ success: true, serializedUser })
+            res.status(201).json({ status: 201, result: serializedUser })
         })
     } else {
         res.status(401)

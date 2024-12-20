@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
 // TODO: names query currently not working (partially due to not capitalizing)
     const profession = await Profession.find({...req.query}).populate('trainings').populate('equipmentGuaranteed')
-    res.json({result: profession, query: req.query})
+    res.json({status: 200, result: profession, query: req.query})
 });
 
 
@@ -19,7 +19,7 @@ router.get('/:id', async (req, res, next) => {
         const profession = await Profession.findById(req.params.id).populate('trainings').populate('equipmentGuaranteed').exec()
 
         if (checkExistence(profession, res, next)) {
-          res.json(profession)
+          res.json({status: 200, result: profession})
         }
 
     } catch (err) {

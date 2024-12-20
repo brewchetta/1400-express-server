@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
         req.query.name = req.query.name.toLowerCase()
     }
     const ancestries = await Ancestry.find({...req.query})
-    res.json({result: ancestries, query: req.query})
+    res.json({ status: 200, result: ancestries })
 });
 
 

@@ -39,6 +39,7 @@ const characterSchema = new Schema({
       special: String,
       rules: { type: String, default: 'core' }
     }],
+    gold: { type: Number, default: 0 },
     trainings: [{
       type: SchemaTypes.ObjectId,
       ref: 'Training'
