@@ -115,13 +115,13 @@ if (args.includes('--trainings')) {
     const seededTrainings = {}
 
     for (let i = 0; i < trainings.length; i++) {
-        
+
         // add prerequisites from previously seeded trainings
         if (trainings[i].prereqs) {
             console.log(`${trainings[i].name} training prereqs: `, trainings[i].prereqs.join())
             trainings[i].prerequisites = trainings[i].prereqs.map(p => seededTrainings[p]?._id)
         }
-        
+
         const key = toCamelCase(trainings[i].name)
 
         const training = await Training.create({ ...trainings[i], key })
@@ -146,7 +146,7 @@ if (args.includes('--users')) {
     for (let i = 0; i < users.length; i++) {
         // delete specific users from seed instead of all
         const user = await User.create(users[i])
-        
+
         console.log(`Created ${user.username} - ${user._id}`)
     }
 }
@@ -159,11 +159,11 @@ if (args.includes('--characters')) {
     console.log('\nSeeding/reseeding characters...')
 
     const ancestries = await Ancestry.find({})
-    
+
     if (!ancestries.length) {
         console.error('Ancestries must be seeded in order to seed characters!')
     }
-    
+
     const users = await User.find({})
 
     if (!users.length) {
@@ -178,7 +178,7 @@ if (args.includes('--characters')) {
     await Character.deleteMany({})
 
     for (let i = 0; i < characters.length; i++) {
-        const relatedAncestry = await Ancestry.findOne({name: characters[i].ancestry})
+        const relatedAncestry = await Ancestry.findOne({ name: characters[i].ancestry })
         characters[i].ancestry = relatedAncestry._id
 
         const relatedUser = users[Math.floor(Math.random() * users.length)]
@@ -189,8 +189,8 @@ if (args.includes('--characters')) {
             const sp1 = spells[Math.floor(Math.random() * spells.length)]._id
             const sp2 = spells[Math.floor(Math.random() * spells.length)]._id
             if (sp1 !== sp2) {
-                const charSpell1 = await CharacterSpell.create({spellData: sp1._id})
-                const charSpell2 = await CharacterSpell.create({spellData: sp2._id})
+                const charSpell1 = await CharacterSpell.create({ spellData: sp1._id })
+                const charSpell2 = await CharacterSpell.create({ spellData: sp2._id })
                 characters[i].spells = [charSpell1._id, charSpell2._id]
             }
         }
@@ -199,8 +199,8 @@ if (args.includes('--characters')) {
             const r1 = rituals[Math.floor(Math.random() * rituals.length)]._id
             const r2 = rituals[Math.floor(Math.random() * rituals.length)]._id
             if (r1 !== r2) {
-                const charRitual1 = await CharacterRitual.create({ritualData: r1._id})
-                const charRitual2 = await CharacterRitual.create({ritualData: r2._id})
+                const charRitual1 = await CharacterRitual.create({ ritualData: r1._id })
+                const charRitual2 = await CharacterRitual.create({ ritualData: r2._id })
                 characters[i].rituals = [charRitual1._id, charRitual2._id]
             }
         }

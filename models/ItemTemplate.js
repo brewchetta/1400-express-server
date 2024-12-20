@@ -13,4 +13,8 @@ const itemTemplateSchema = new Schema({
 
 const ItemTemplate = model('ItemTemplate', itemTemplateSchema)
 
+ItemTemplate.categories = [
+  'Weapon', 'Armour', 'Tool', 'Supply', 'Vehicle', 'Animal Companion', 'Magic Companion', 
+]
+
 export default ItemTemplate

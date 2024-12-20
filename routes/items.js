@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
 // TODO: names query currently not working (partially due to not capitalizing)
     const items = await ItemTemplate.find({...req.query})
-    res.json({status: 200, result: items, query: req.query})
+    res.json({status: 200, result: items, query: req.query, categories: ItemTemplate.categories})
 });
 
 

@@ -292,4 +292,79 @@ router.delete('/:id/rituals/:ritualID', async (req, res, next) => {
 })
 
 
+/* CHARACTER ITEMS */
+
+
+/* POST /characters/:id/items */
+// RETURNS UPDATED LIST OF CHARACTER ITEMS
+router.post('/:id/items', async (req, res, next) => {
+  const currentUser = await getCurrentUser(req)
+  if (!currentUser) {
+    return res.status(401).json({error: "No authorized users logged in"})
+  }
+  const character = await Character.findById(req.params.id).exec()
+  const characterExists = checkExistence(character, res, next)  
+  if (characterExists) {
+    try {
+      character.items.push(req.body)
+      await character.save()
+      res.status(202).json({status: 202, message: "Success", result: character.items})
+    } catch (error) {
+      res.status(400)
+      next(error)
+    }
+  }
+  
+})
+
+
+/* PATCH /characters/:id/items/:epochStamp */
+// RETURNS UPDATED LIST OF CHARACTER ITEMS
+router.patch('/:id/items/:epochStamp', async (req, res, next) => {
+  const currentUser = await getCurrentUser(req)
+  if (!currentUser) {
+    return res.status(401).json({error: "No authorized users logged in"})
+  }
+  const character = await Character.findById(req.params.id).exec()
+  const characterExists = checkExistence(character, res, next)
+  if (characterExists) {
+    try {
+      const item = character.items.find(item => item.epochStamp === req.params.epochStamp)
+      // iterate on keys and update
+      Object.keys(req.body).forEach(key => item[key] = req.body[key] )
+      // save character and return
+      await character.save()
+      res.status(202).json({status: 202, message: "Success", result: character.items})
+    } catch (error) {
+      res.status(400)
+      next(error)
+    }
+  }
+  
+})
+
+
+/* DELETE /characters/:id/items/:epochStamp */
+// RETURNS UPDATED LIST OF CHARACTER ITEMS
+router.delete('/:id/items/:epochStamp', async (req, res, next) => {
+  const currentUser = await getCurrentUser(req)
+  if (!currentUser) {
+    return res.status(401).json({error: "No authorized users logged in"})
+  }
+  const character = await Character.findById(req.params.id).exec()
+  const characterExists = checkExistence(character, res, next)
+  if (characterExists) {
+    try {
+      character.items = character.items.filter(item => item.epochStamp !== req.params.epochStamp)
+      await character.save()
+      res.status(202).json({status: 202, message: "Success", result: character.items})
+    } catch (error) {
+      res.status(400)
+      next(error)
+    }
+  }
+
+})
+
+
 export default router

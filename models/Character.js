@@ -30,6 +30,7 @@ const characterSchema = new Schema({
       ref: 'CharacterRitual'
     }],
     items: [{
+      epochStamp: { type: String, default: () => Date.now() },
       key: { type: String, required: true },
       name: { type: String, required: true },
       durability: Number,
