@@ -5,6 +5,7 @@ import Character from '../models/Character.js'
 import CharacterRitual from '../models/CharacterRitual.js'
 import CharacterSpell from '../models/CharacterSpell.js'
 import ItemTemplate from '../models/ItemTemplate.js'
+import Profession from '../models/Profession.js'
 import Ritual from '../models/Ritual.js'
 import Spell from '../models/Spell.js'
 import Training from '../models/Training.js'
@@ -13,6 +14,7 @@ import User from '../models/User.js'
 import ancestriesData from './ancestries-seed.json' with { type: 'json' }
 import charactersData from './characters-seed.json' with { type: 'json' }
 import itemsData from './items-seed.json' with { type: 'json' }
+import professionsData from './professions-seed.json' with { type: 'json' }
 import ritualsData from './rituals-seed.json' with { type: 'json' }
 import spellsData from './spells-seed.json' with { type: 'json' }
 import trainingsData from './trainings-seed.json' with { type: 'json' }
@@ -33,8 +35,10 @@ if (args.includes('-h') || args.includes('--help') || args.length == 2) {
         '\n  --ancestries',
         '\n  --characters',
         '\n  --items',
-        '\n  --spells',
+        '\n  --professions',
         '\n  --rituals',
+        '\n  --spells',
+        '\n  --users',
     )
     process.exit()
 }
@@ -131,6 +135,47 @@ if (args.includes('--trainings')) {
         console.log(`Created ${training.name} - ${training._id}`)
     }
 
+}
+
+
+/* PROFESSIONS */
+
+if (args.includes('--professions')) {
+    const { professions } = professionsData
+
+    console.log('\nSeeding/reseeding professions...')
+
+    const trainings = await Training.find({})
+
+    if (!trainings.length) {
+        console.error('Trainings must be seeded in order to seed professions!')
+    }
+
+    const items = await ItemTemplate.find({})
+
+    if (!items.length) {
+        console.error('Items must be seeded in order to seed professions!')
+    }
+
+    await Profession.deleteMany({})
+
+    for (let i = 0; i < professions.length; i++) {
+        const profession = professions[i]
+
+        profession.equipmentGuaranteed = items
+            .filter(item => profession.equipmentGuaranteed.includes(item.name.toLowerCase()))
+            .map(item => item._id)
+
+        profession.trainings = trainings
+            .filter(training => profession.trainings.includes(toCamelCase(training.name)))
+            .map(training => training._id)
+
+        profession.key = toCamelCase(profession.name)
+
+        const newProfession = await Profession.create(profession)
+        console.log(`Created ${newProfession.name} - ${newProfession._id}`)     
+    }
+    
 }
 
 

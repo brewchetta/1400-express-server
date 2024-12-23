@@ -3,11 +3,23 @@ import Ancestry from '../models/Ancestry.js'
 import Character from '../models/Character.js'
 import CharacterSpell from '../models/CharacterSpell.js'
 import CharacterRitual from '../models/CharacterRitual.js'
+
+import Profession from '../models/Profession.js'
 import Spell from '../models/Spell.js'
 import Ritual from '../models/Ritual.js'
+
 import { checkExistence, getCurrentUser } from './_routeHelpers.js';
 
 const router = express.Router();
+
+
+/* GET /characters/creation-options */
+router.get('/creation-options', async (req, res, next) => {
+  const professions = await Profession.find({}).populate(['trainings', 'equipmentGuaranteed'])
+  const spells = await Spell.find({})
+  const rituals = await Ritual.find({})
+  res.json({status: 200, result: { professions, spells, rituals }})
+})
 
 
 /* GET /characters/:id */

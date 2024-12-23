@@ -7,18 +7,20 @@
             "skillSlots": 3,
             "spells": 2,
             "equipmentGuaranteed": ["instrument", "backpack", "waterskin"],
-            "description": "Increase (d8) Performing and any 3 of Melee Combat, Deception, Disguise, Reading People, Persuasion. Learn 2 spells. Take an instrument.",
-            "trainings": ["magicalMusician"]
+            "equipmentGroups": ["Tool"],
+            "description": "Increase (d8) Performing and any 3 of Melee Combat, Deception, Disguise, Reading People, Persuasion. Learn 2 spells. Take an instrument and a tool.",
+            "trainings": ["magicalMusician", "lucky"]
         },
         {
             "name": "Mage",
             "coreskill": "Spellcasting",
             "skills": ["Arcane Lore", "History Lore", "Nature Lore", "Religious Lore", "Handwriting"],
             "skillSlots": 2,
-            "spells": 5,
+            "spells": 4,
             "equipmentGuaranteed": ["backpack", "waterskin"],
-            "description": "Increase (d8) Spellcasting and any 2 of any kind of Lore or Handwriting. Learn 5 spells.",
-            "trainings": ["mageInitiate"]
+            "equipmentGroups": [],
+            "description": "Increase (d8) Arcane Lore and any 2 of any other kind of Lore or Handwriting. Learn 4 spells.",
+            "trainings": ["arcanist", "magicInitiate"]
         },
         {
             "name": "Priest",
@@ -28,30 +30,20 @@
             "spells": 3,
             "equipmentGuaranteed": ["backpack", "waterskin"],
             "equipmentGroups": ["Light Weapon", "Tool"],
-            "description": "Increase (d8) Religious Lore and any 1 of Melee Combat, Medicine, Reading People. Learn 3 spells. Take a weapon or a tool.",
-            "trainings": ["disciple"]
+            "description": "Increase (d8) Religious Lore and any 1 of Melee Combat, Medicine, Reading People. Learn 3 spells. Take a light weapon and a tool.",
+            "trainings": ["disciple", "druid"]
         },
         {
-            "name": "Explorer",
-            "coreskill": "Tracking",
-            "skills": ["Ranged Combat", "Running/Jumping", "Sneaking", "Foraging", "Melee Combat", "Trapping", "Climbing", "Nature Lore"],
-            "skillSlots": 3,
-            "equipmentGroups": ["Weapon"],
-            "equipmentGuaranteed": ["backpack", "waterskin"],
-            "description": "Increase (d8) Tracker and any 3 of Ranged Combat, Running/Jumping, Sneaking, Foraging, Melee Combat, Trapping, Climbing, Nature Lore. Take a weapon.",
-            "trainings": ["wanderer"]
-        },
-        {
-            "name": "Skulker",
+            "name": "Scoundrel",
             "coreskill": "Sneaking",
-            "skills": ["Trapping", "Sleight of Hand", "Deception", "Disguise", "Climbing"],
+            "skills": [ "Climbing", "Deception", "Disguise", "Ranged Combat", "Running/Jumping", "Sailing", "Sleight of Hand", "Trapping" ],
             "skillSlots": 3,
             "equipmentGuaranteed": ["backpack", "waterskin"],
             "equipmentGroups": ["Light Weapon", "Tool"],
             "expertise": 2,
             "specialText": "Increase two skills an additional time (d10)",
-            "description": "Increase (d8) Sneaking and any 3 of Trapping, Sleight of Hand, Deception, Disguise, Climbing. Then increase (d10) two of them again. Take a light weapon and a tool.",
-            "trainings": ["skulkerThief"]
+            "description": "Increase (d8) Sneaking and any 3 from Climbing, Deception, Disguise, Ranged Combat, Running/Jumping, Sailing, Sleight of Hand, Trapping. Then increase (d10) two of them again. Take a light weapon and a tool.",
+            "trainings": ["thief", "wanderer"]
         },
         {
             "name": "Warrior",
@@ -60,8 +52,8 @@
             "skillSlots": 2,
             "equipmentGuaranteed": ["backpack", "waterskin"],
             "equipmentGroups": ["Armour", "Weapon"],
-            "description": "Increase (d8) Melee Combat and any 2 of Intimidation, Running/Jumping, Ranged Combat, Riding. Can carry an additional heavy item without hindrance. Take a piece of armour and a weapon.",
-            "trainings": ["warrior"]
+            "description": "Increase (d8) Melee Combat and any 2 of Intimidation, Running/Jumping, Ranged Combat, Riding. Take a piece of armour and a weapon.",
+            "trainings": ["strong", "artisan", "healer"]
         }
     ]
 }

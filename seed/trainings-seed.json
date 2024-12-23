@@ -1,12 +1,16 @@
 {
     "trainings": [
         {
+            "name": "Arcanist",
+            "description": "You can use Arcane Lore instead of a d6 when casting spells."
+        },
+        {
             "name": "Artisan",
             "description": "You can mend damaged armor without the aid of an artisan. Each square of durability takes an hour to mend."
         },
         {
             "name": "Disciple",
-            "description": "You can use Religious Lore instead of Spellcasting when casting spells."
+            "description": "You can use Religious Lore instead of a d6 when casting spells."
         },
         {
             "name": "Abjurer of Evil",
@@ -19,6 +23,15 @@
             "prereqs": ["disciple"]
         },
         {
+            "name": "Druid",
+            "description": "You can use Nature Lore instead of a d6 when casting spells."
+        },
+        {
+            "name": "Wildshaper",
+            "description": "On gaining this training choose an animal no larger than a bear and no smaller than a mouse. You can shapeshift into that animal at will.",
+            "prereqs": ["druid"]
+        },
+        {
             "name": "Healer",
             "description": "You can make a medicine roll to gather helpful herbs and heal a single character's wound over the course of an hour."
         },
@@ -28,21 +41,21 @@
         },
         {
             "name": "Magical Musician",
-            "description": "You can use Perform instead of Spellcasting when casting spells. This only works if you sing or use an instrument as part of casting the spell."
+            "description": "You can use Perform instead of a d6 when casting spells. This only works if you sing or use an instrument as part of casting the spell."
         },
         {
-            "name": "Mage Initiate",
+            "name": "Magic Initiate",
             "description": "You have room for 4 spells in your spellbook."
         },
         {
-            "name": "Mage Adept",
+            "name": "Magic Adept",
             "description": "You have room for 8 spells in your spellbook.",
-            "prereqs": ["mageInitiate"]
+            "prereqs": ["magicInitiate"]
         },
         {
-            "name": "Mage Ascendant",
+            "name": "Magic Ascendant",
             "description": "You have room for any number of spells in your spellbook.",
-            "prereqs": ["mageAdept"]
+            "prereqs": ["magicAdept"]
         },
         {
             "name": "Ritualist",
@@ -65,28 +78,9 @@
             "description": "Whenever you find something lost to time or undiscovered you regain your Luck Dice."
         },
         {
-            "name": "Druid",
-            "description": "On gaining this training choose an animal no larger than a bear and no smaller than a mouse. You can shapeshift into that animal at will.",
-            "prereqs": ["wanderer"]
-        },
-        {
             "name": "Tamer",
             "description": "You have an animal companion who joins your adventure. The companion has its own health, personality and motives however it considers you a friend so long as you treat it well. You may also instead have a number of small animal companions like sparrows or squirrels.",
             "prereqs": ["wanderer"]
-        },
-        {
-            "name": "Warrior",
-            "description": "Whenever you finish combat you regain your Luck Dice."
-        },
-        {
-            "name": "Heavily Armed",
-            "description": "You can wield two handed weapons without being hindered.",
-            "prereqs": ["warrior"]
-        },
-        {
-            "name": "Heavily Armored",
-            "description": "You can wear heavy armor without being hindered.",
-            "prereqs": ["warrior"]
         }
     ]
 }

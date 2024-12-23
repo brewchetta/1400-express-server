@@ -9,7 +9,7 @@ const professionSchema = new Schema({
   spells: Number,
   equipmentGuaranteed: [{
     type: SchemaTypes.ObjectId,
-    ref: 'EquipmentTemplate'
+    ref: 'ItemTemplate'
   }],
   equipmentGroups: [ String ],
   description: String,

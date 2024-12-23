@@ -80,7 +80,6 @@ Character.acceptedSkillNames = [
   "Perception",
   "Sleight of Hand",
   "Sneaking",
-  "Spellcasting",
   "Swimming",
   "Tracking",
   "Trapping",
