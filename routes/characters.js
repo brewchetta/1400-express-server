@@ -149,6 +149,9 @@ router.post('/:id/spells', async (req, res, next) => {
     try {
       const charSpell = await CharacterSpell.create({spellData: {_id: req.body._id}})
       character.spells.push(charSpell._id)
+      if (req.body.cost) {
+        character.gold -= req.body.cost
+      }
       await character.save()
       await character.populate({path: 'spells', populate: ['spellData']})
       res.status(202).json({status: 202, message: "Success", result: character.spells})
@@ -233,8 +236,11 @@ router.post('/:id/rituals', async (req, res, next) => {
   const characterExists = checkExistence(character, res, next)  
   if (characterExists) {
     try {
-      const charSpell = await CharacterRitual.create({ritualData: {_id: req.body._id}})
+      const charRitual = await CharacterRitual.create({ritualData: {_id: req.body._id}})
       character.rituals.push(charRitual._id)
+      if (req.body.cost) {
+        character.gold -= req.body.cost
+      }
       await character.save()
       await character.populate({path: 'rituals', populate: ['ritualData']})
       res.status(202).json({status: 202, message: "Success", result: character.rituals})

@@ -1,5 +1,7 @@
 import express from 'express'
 import ItemTemplate from '../models/ItemTemplate.js'
+import Spell from '../models/Spell.js'
+import Ritual from '../models/Ritual.js'
 import { checkExistence } from './_routeHelpers.js'
 
 const router = express.Router();
