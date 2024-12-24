@@ -13,6 +13,10 @@ const characterSchema = new Schema({
     luckyMaximum: { type: Number, default: 1 },
     hindered: { type: Boolean, default: false },
     helped: { type: Boolean, default: false },
+    profession: {
+      type: SchemaTypes.ObjectId,
+      ref: 'Profession'
+    },
     ancestry: {
       type: SchemaTypes.ObjectId,
       ref: 'Ancestry'
@@ -25,6 +29,10 @@ const characterSchema = new Schema({
       type: SchemaTypes.ObjectId,
       ref: 'CharacterSpell'
     }],
+    spellsMax: {
+      type: Number,
+      default: 3
+    },
     rituals: [{
       type: SchemaTypes.ObjectId,
       ref: 'CharacterRitual'

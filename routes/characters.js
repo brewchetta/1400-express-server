@@ -1,12 +1,14 @@
 import express from 'express'
 import Ancestry from '../models/Ancestry.js'
+import ItemTemplate from '../models/ItemTemplate.js'
+import Profession from '../models/Profession.js'
+import Spell from '../models/Spell.js'
+import Ritual from '../models/Ritual.js'
+
 import Character from '../models/Character.js'
 import CharacterSpell from '../models/CharacterSpell.js'
 import CharacterRitual from '../models/CharacterRitual.js'
 
-import Profession from '../models/Profession.js'
-import Spell from '../models/Spell.js'
-import Ritual from '../models/Ritual.js'
 
 import { checkExistence, getCurrentUser } from './_routeHelpers.js';
 
@@ -15,10 +17,16 @@ const router = express.Router();
 
 /* GET /characters/creation-options */
 router.get('/creation-options', async (req, res, next) => {
+  const ancestries = await Ancestry.find({})
+  const items = await ItemTemplate.find({ 
+    $and: [
+      { tags: { $in: ["Tool", "Weapon", "Armour", "Supply" ] } },
+      { tags: { $ne: "Magic Item" } }
+    ]})
   const professions = await Profession.find({}).populate(['trainings', 'equipmentGuaranteed'])
   const spells = await Spell.find({})
   const rituals = await Ritual.find({})
-  res.json({status: 200, result: { professions, spells, rituals }})
+  res.json({status: 200, result: { ancestries, professions, spells, rituals, skills: Character.acceptedSkillNames, items }})
 })
 
 
@@ -74,11 +82,41 @@ router.post('/', async (req, res, next) => {
   }
   try {
     // handle find ancestries
-    const ancestryName = req.body.ancestry
-      const foundAncestry = await Ancestry.findOne({name: ancestryName})
+    const ancestryId = req.body.ancestry
+      const foundAncestry = await Ancestry.findById({_id: ancestryId})
     if (!foundAncestry) { throw Error('Ancestry must exist') }
   
     req.body.ancestry = foundAncestry._id
+
+    if (req.body.spells) {
+      for (let i = 0; i < req.body.spells.length; i++) {
+        const spell = req.body.spells[i]
+        try {
+          const newCharSpell = await CharacterSpell.create({ spellData: spell })
+          req.body.spells[i] = newCharSpell._id
+
+        } catch (err) {
+          console.warn(`Unable to build spell ${spell.name} -- invalid _id`)
+        }
+
+      }
+
+    }
+
+    if (req.body.rituals) {
+      for (let i = 0; i < req.body.rituals.length; i++) {
+        const spell = req.body.rituals[i]
+        try {
+          const newCharSpell = await CharacterRitual.create({ ritualData: spell })
+          req.body.rituals[i] = newCharSpell._id
+
+        } catch (err) {
+          console.warn(`Unable to build spell ${spell.name} -- invalid _id`)
+        }
+
+      }
+
+    }
 
     const newChar = await Character.create({...req.body, user: currentUser._id})
     await newChar.populate([
@@ -86,12 +124,11 @@ router.post('/', async (req, res, next) => {
       'trainings', 
       {path: 'spells', populate: 'spellData'}, 
       {path: 'rituals', populate: 'ritualData'}])
-      .exec()
 
     res.status(201).json({ 
       status: 201, 
       message: "Success", 
-      result: newChar.populate(['ancestry', 'trainings', 'spells', 'rituals']) 
+      result: newChar
     })
 
   } catch (err) {

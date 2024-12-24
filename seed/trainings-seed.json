@@ -33,7 +33,7 @@
         },
         {
             "name": "Healer",
-            "description": "You can make a medicine roll to gather helpful herbs and heal a single character's wound over the course of an hour."
+            "description": "You can make a medicine challenge to gather helpful items and heal a single character's wound over the course of an hour."
         },
         {
             "name": "Lucky",
@@ -45,7 +45,7 @@
         },
         {
             "name": "Magic Initiate",
-            "description": "You have room for 4 spells in your spellbook."
+            "description": "You have room for 5 spells in your spellbook."
         },
         {
             "name": "Magic Adept",

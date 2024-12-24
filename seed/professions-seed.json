@@ -5,10 +5,10 @@
             "coreskill": "Performing",
             "skills": ["Melee Combat", "Deception", "Disguise", "Reading People", "Persuasion"],
             "skillSlots": 3,
-            "spells": 2,
+            "spells": 1,
             "equipmentGuaranteed": ["instrument", "backpack", "waterskin"],
             "equipmentGroups": ["Tool"],
-            "description": "Increase (d8) Performing and any 3 of Melee Combat, Deception, Disguise, Reading People, Persuasion. Learn 2 spells. Take an instrument and a tool.",
+            "description": "Increase (d8) Performing and any 3 of Melee Combat, Deception, Disguise, Reading People, Persuasion. Learn 1 spell. Take an instrument and a tool.",
             "trainings": ["magicalMusician", "lucky"]
         },
         {
@@ -16,10 +16,10 @@
             "coreskill": "Spellcasting",
             "skills": ["Arcane Lore", "History Lore", "Nature Lore", "Religious Lore", "Handwriting"],
             "skillSlots": 2,
-            "spells": 4,
+            "spells": 2,
             "equipmentGuaranteed": ["backpack", "waterskin"],
             "equipmentGroups": [],
-            "description": "Increase (d8) Arcane Lore and any 2 of any other kind of Lore or Handwriting. Learn 4 spells.",
+            "description": "Increase (d8) Arcane Lore and any 2 of any other kind of Lore or Handwriting. Learn 2 spells.",
             "trainings": ["arcanist", "magicInitiate"]
         },
         {
@@ -27,10 +27,10 @@
             "coreskill": "Religious Lore",
             "skills": ["Melee Combat", "Medicine", "Reading People"],
             "skillSlots": 1,
-            "spells": 3,
+            "spells": 2,
             "equipmentGuaranteed": ["backpack", "waterskin"],
             "equipmentGroups": ["Light Weapon", "Tool"],
-            "description": "Increase (d8) Religious Lore and any 1 of Melee Combat, Medicine, Reading People. Learn 3 spells. Take a light weapon and a tool.",
+            "description": "Increase (d8) Religious Lore and any 1 of Melee Combat, Medicine, Reading People. Learn 2 spells. Take a light weapon and a tool.",
             "trainings": ["disciple", "druid"]
         },
         {
