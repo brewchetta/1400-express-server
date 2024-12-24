@@ -125,6 +125,13 @@ router.post('/', async (req, res, next) => {
       {path: 'spells', populate: 'spellData'}, 
       {path: 'rituals', populate: 'ritualData'}])
 
+    // handle lucky training
+    if (newChar.trainings.find(t => t.key === 'lucky')) {
+      newChar.luckyMaximum = 2
+      newChar.lucky = 2
+      await newChar.save()
+    }
+
     res.status(201).json({ 
       status: 201, 
       message: "Success", 
@@ -155,6 +162,13 @@ router.patch('/:id', async (req, res, next) => {
     try {
       // iterate on keys and update
       Object.keys(req.body).forEach(key => character[key] = req.body[key] )
+
+      // handle lucky training
+      if (character.trainings.find(t => t.key === 'lucky')) {
+        character.luckyMaximum = 2
+      } else {
+        character.luckyMaximum = 2
+      }
 
       // save and return
       await character.save()
