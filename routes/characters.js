@@ -4,6 +4,7 @@ import ItemTemplate from '../models/ItemTemplate.js'
 import Profession from '../models/Profession.js'
 import Spell from '../models/Spell.js'
 import Ritual from '../models/Ritual.js'
+import Training from '../models/Training.js'
 
 import Character from '../models/Character.js'
 import CharacterSpell from '../models/CharacterSpell.js'
@@ -27,6 +28,16 @@ router.get('/creation-options', async (req, res, next) => {
   const spells = await Spell.find({})
   const rituals = await Ritual.find({})
   res.json({status: 200, result: { ancestries, professions, spells, rituals, skills: Character.acceptedSkillNames, items }})
+})
+
+
+/* GET /characters/level-up-options */
+router.get('/level-up-options', async (req, res, next) => {
+  const skills = Character.acceptedSkillNames
+  const spells = await Spell.find({})
+  const rituals = await Ritual.find({})
+  const trainings = await Training.find({}).populate('prerequisites')
+  res.json({status: 200, result: { spells, rituals, skills, trainings }})
 })
 
 
