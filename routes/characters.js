@@ -162,27 +162,46 @@ router.patch('/:id', async (req, res, next) => {
   if (!currentUser) {
     return res.status(401).json({error: "No authorized users logged in"})
   }
-  const character = await Character.findById(req.params.id).populate([
-    'ancestry', 
-    'trainings', 
-    {path: 'spells', populate: 'spellData'}, 
-    {path: 'rituals', populate: 'ritualData'}])
-    .exec()
+  const character = await Character.findById(req.params.id).exec()
 
     if (checkExistence(character, res, next)) {
     try {
       // iterate on keys and update
       Object.keys(req.body).forEach(key => character[key] = req.body[key] )
 
-      // handle lucky training
-      if (character.trainings.find(t => t.key === 'lucky')) {
-        character.luckyMaximum = 2
-      } else {
-        character.luckyMaximum = 2
-      }
-
       // save and return
       await character.save()
+      await character.populate([
+        'ancestry',
+        'trainings', 
+        {path: 'spells', populate: 'spellData'}, 
+        {path: 'rituals', populate: 'ritualData'}
+      ])
+
+      // handle lucky training
+      if (character.trainings.find(t => t.key === 'lucky')) {
+        console.log('FOUND LUCKY')
+        character.luckyMaximum = 2
+      } else {
+        character.luckyMaximum = 1
+      }
+      
+      // handle magic training
+      if (character.trainings.find(t => t.key === 'magicInitiate')) {
+        console.log('FOUND MAGIC INITIAITE')
+        character.spellsMax = 5
+      }
+      if (character.trainings.find(t => t.key === 'magicAdept')) {
+        console.log('FOUND MAGIC ADEPT')
+        character.spellsMax = 8
+      }
+      if (character.trainings.find(t => t.key === 'magicAscendant')) {
+        console.log('FOUND MAGIC ASENDANT')
+        character.spellsMax = 100
+      }
+
+      await character.save()
+
       res.status(202).json({status: 202, message: "Success", result: character})
     } catch (error) {
       res.status(400)
