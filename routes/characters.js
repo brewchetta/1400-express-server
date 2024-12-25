@@ -4,6 +4,7 @@ import ItemTemplate from '../models/ItemTemplate.js'
 import Profession from '../models/Profession.js'
 import Spell from '../models/Spell.js'
 import Ritual from '../models/Ritual.js'
+import Training from '../models/Training.js'
 
 import Character from '../models/Character.js'
 import CharacterSpell from '../models/CharacterSpell.js'
@@ -27,6 +28,16 @@ router.get('/creation-options', async (req, res, next) => {
   const spells = await Spell.find({})
   const rituals = await Ritual.find({})
   res.json({status: 200, result: { ancestries, professions, spells, rituals, skills: Character.acceptedSkillNames, items }})
+})
+
+
+/* GET /characters/level-up-options */
+router.get('/level-up-options', async (req, res, next) => {
+  const skills = Character.acceptedSkillNames
+  const spells = await Spell.find({})
+  const rituals = await Ritual.find({})
+  const trainings = await Training.find({}).populate('prerequisites')
+  res.json({status: 200, result: { spells, rituals, skills, trainings }})
 })
 
 
@@ -125,6 +136,13 @@ router.post('/', async (req, res, next) => {
       {path: 'spells', populate: 'spellData'}, 
       {path: 'rituals', populate: 'ritualData'}])
 
+    // handle lucky training
+    if (newChar.trainings.find(t => t.key === 'lucky')) {
+      newChar.luckyMaximum = 2
+      newChar.lucky = 2
+      await newChar.save()
+    }
+
     res.status(201).json({ 
       status: 201, 
       message: "Success", 
@@ -144,12 +162,7 @@ router.patch('/:id', async (req, res, next) => {
   if (!currentUser) {
     return res.status(401).json({error: "No authorized users logged in"})
   }
-  const character = await Character.findById(req.params.id).populate([
-    'ancestry', 
-    'trainings', 
-    {path: 'spells', populate: 'spellData'}, 
-    {path: 'rituals', populate: 'ritualData'}])
-    .exec()
+  const character = await Character.findById(req.params.id).exec()
 
     if (checkExistence(character, res, next)) {
     try {
@@ -158,6 +171,37 @@ router.patch('/:id', async (req, res, next) => {
 
       // save and return
       await character.save()
+      await character.populate([
+        'ancestry',
+        'trainings', 
+        {path: 'spells', populate: 'spellData'}, 
+        {path: 'rituals', populate: 'ritualData'}
+      ])
+
+      // handle lucky training
+      if (character.trainings.find(t => t.key === 'lucky')) {
+        console.log('FOUND LUCKY')
+        character.luckyMaximum = 2
+      } else {
+        character.luckyMaximum = 1
+      }
+      
+      // handle magic training
+      if (character.trainings.find(t => t.key === 'magicInitiate')) {
+        console.log('FOUND MAGIC INITIAITE')
+        character.spellsMax = 5
+      }
+      if (character.trainings.find(t => t.key === 'magicAdept')) {
+        console.log('FOUND MAGIC ADEPT')
+        character.spellsMax = 8
+      }
+      if (character.trainings.find(t => t.key === 'magicAscendant')) {
+        console.log('FOUND MAGIC ASENDANT')
+        character.spellsMax = 100
+      }
+
+      await character.save()
+
       res.status(202).json({status: 202, message: "Success", result: character})
     } catch (error) {
       res.status(400)
