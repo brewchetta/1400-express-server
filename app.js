@@ -1,5 +1,6 @@
 import express from 'express'
-// import path from 'path'
+import path from 'path'
+import { fileURLToPath } from 'url' // used for static paths with node modules
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 import dotenv from 'dotenv'
@@ -44,9 +45,13 @@ app.use(session({
     }
 }))
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+const buildPath = path.normalize(path.join(__dirname, 'client'))
+app.use(express.static(buildPath))
+
 app.use('/ancestries', ancestriesRouter);
 app.use('/characters', charactersRouter);
 app.use('/items', itemsRouter);
@@ -54,6 +59,17 @@ app.use('/rituals', ritualsRouter);
 app.use('/spells', spellsRouter);
 app.use('/trainings', trainingsRouter);
 app.use('/users', usersRouter);
+
+app.use('/*', (req, res, next) => {
+    if (/(.ico|.js|.css|.jpg|.png|.map|.svg)$/i.test(req.path)) {
+        next();
+    } else {
+        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+        res.header('Expires', '-1')
+        res.header('Pragma', 'no-cache')
+        res.sendFile(path.join(__dirname, 'client', 'index.html'))
+    }
+})
 
 app.use((err, req, res, next) => {
     res.json({
