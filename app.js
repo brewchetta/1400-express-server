@@ -31,14 +31,14 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(session({
-    secret: 'TODO-ADD-SECRET', // TODO: actually add the secret you silly billy
+    secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
         mongoUrl: MONGO_URL
     }),
     cookie: {
-        secure: false, // TODO: use process.env.NODE_ENV === 'production' here
+        secure: process.env.NODE_ENV === 'production',
         maxAge: 12 * 60 * 60 * 1000,
         httpOnly: false,
         sameSite: "strict"
