@@ -44,7 +44,6 @@ router.post('/', async (req, res, next) => {
     const serializedUser = await newUser.serialize()
     req.session.token = generateToken(newUser._id)
     res.status(201).json({ status: 201, result: serializedUser })
-
   } catch (err) {
     res.status(400)
     next(err)
@@ -55,7 +54,10 @@ router.post('/', async (req, res, next) => {
 /* POST /users/login */
 router.post('/login', async(req, res, next) => {
     const { username, password } = req.body
-    const user = await User.findOne({ username }).select('+password').exec()
+    const user = await User.findOne({ $or: [
+        {username}, 
+        { email: username }
+    ] }).select('+password').exec()
 
     if ( user ) {
         user.comparePassword(password, async (error, isMatch) => {

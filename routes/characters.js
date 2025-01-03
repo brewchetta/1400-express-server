@@ -207,6 +207,7 @@ router.post('/:id/spells', async (req, res, next) => {
   if (characterExists) {
     try {
       character.spells.push(req.body._id)
+      console.log(req.body.cost)
       if (req.body.cost) {
         character.gold -= req.body.cost
       }
