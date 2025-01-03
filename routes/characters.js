@@ -261,21 +261,21 @@ router.delete('/:id/spells/:spellID', async (req, res, next) => {
   if (!currentUser) {
     return res.status(401).json({error: "No authorized users logged in"})
   }
-  const character = await Character.findById(req.params.id).exec()
-  if ( checkExistence(character, res, next) ) {
-    try {
-      character.spells.filter(id => id !== req.params.id)
-      await character.save()
-      await character.populate('spells')
-      res.status(202).json({status: 202, message: "Success", result: character.spells})
-    } catch (error) {
-      res.status(400)
-      next(error)
-    }
-  } else {
-    res.status(400).json({status: 400, error: 'Unable to delete spell'})
+  try {
+    const character = await Character.findOneAndUpdate(
+      {_id: req.params.id, user: currentUser._id},
+      {'$pull': {'spells': req.params.spellID }},
+      { new: true }
+    )
+    console.log(character.spells)
+    // const character = await Character.findOne({_id: req.params.id, user: currentUser._id}).exec()
+    await character.populate('spells')
+    console.log(character.spells)
+    res.status(202).json({status: 202, message: "Success", result: character.spells})
+  } catch (error) {
+    res.status(400)
+    next(error)
   }
-
 })
 
 
@@ -342,27 +342,27 @@ router.post('/:id/rituals', async (req, res, next) => {
 
 
 /* DELETE /characters/:id/rituals/:ritualID */
-// RETURNS UPDATED LIST OF CHARACTER RITUALS
+// RETURNS UPDATED LIST OF CHARACTER SPELLS
 router.delete('/:id/rituals/:ritualID', async (req, res, next) => {
   const currentUser = await getCurrentUser(req)
   if (!currentUser) {
     return res.status(401).json({error: "No authorized users logged in"})
   }
-  const character = await Character.findById(req.params.id).exec()
-  if ( checkExistence(character, res, next) ) {
-    try {
-      character.rituals.filter(id => id !== req.params.id)
-      await character.save()
-      await character.populate('rituals')
-      res.status(202).json({status: 202, message: "Success", result: character.rituals})
-    } catch (error) {
-      res.status(400)
-      next(error)
-    }
-  } else {
-    res.status(400).json({status: 400, error: 'Unable to delete ritual'})
+  try {
+    const character = await Character.findOneAndUpdate(
+      {_id: req.params.id, user: currentUser._id},
+      {'$pull': {'rituals': req.params.ritualID }},
+      { new: true }
+    )
+    console.log(character.rituals)
+    // const character = await Character.findOne({_id: req.params.id, user: currentUser._id}).exec()
+    await character.populate('rituals')
+    console.log(character.rituals)
+    res.status(202).json({status: 202, message: "Success", result: character.rituals})
+  } catch (error) {
+    res.status(400)
+    next(error)
   }
-
 })
 
 
