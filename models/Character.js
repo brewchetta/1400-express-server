@@ -69,7 +69,6 @@ Character.acceptedSkillNames = [
   "Crafting",
   "Deception",
   "Disguise",
-  "Engineering",
   "Foraging",
   "Handwriting",
   "Intimidation",
