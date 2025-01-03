@@ -1,4 +1,5 @@
 import  { Schema, SchemaTypes, model } from 'mongoose'
+import { v4 as uuid } from 'uuid'
 
 const characterSchema = new Schema({
     user: {
@@ -38,7 +39,7 @@ const characterSchema = new Schema({
       ref: 'Ritual'
     }],
     items: [{
-      epochStamp: { type: String, default: () => Date.now() },
+      epochStamp: { type: String, default: () => uuid() },
       key: { type: String, required: true },
       name: { type: String, required: true },
       durability: Number,

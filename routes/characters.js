@@ -429,6 +429,7 @@ router.patch('/:id/items/:epochStamp', async (req, res, next) => {
   if (characterExists) {
     try {
       const item = character.items.find(item => item.epochStamp === req.params.epochStamp)
+      console.log(item, req.params.epochStamp)
       // iterate on keys and update
       Object.keys(req.body).forEach(key => item[key] = req.body[key] )
       // save character and return
