@@ -395,7 +395,7 @@ router.post('/:id/items', async (req, res, next) => {
 
 /* POST /characters/:id/items/buy */
 // RETURNS UPDATED CHARACTER
-router.post('/:id/items', async (req, res, next) => {
+router.post('/:id/items/buy', async (req, res, next) => {
   const currentUser = await getCurrentUser(req)
   if (!currentUser) {
     return res.status(401).json({error: "No authorized users logged in"})
@@ -407,7 +407,7 @@ router.post('/:id/items', async (req, res, next) => {
       character.items.push(req.body)
       character.gold -= (req.body.cost || 1)
       await character.save()
-      res.status(202).json({status: 202, message: "Success", result: character})
+      res.status(202).json({status: 202, message: "Success", result: {items: character.items, gold: character.gold}})
     } catch (error) {
       res.status(400)
       next(error)
