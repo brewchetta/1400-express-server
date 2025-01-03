@@ -7,9 +7,6 @@ import Ritual from '../models/Ritual.js'
 import Training from '../models/Training.js'
 
 import Character from '../models/Character.js'
-import CharacterSpell from '../models/CharacterSpell.js'
-import CharacterRitual from '../models/CharacterRitual.js'
-
 
 import { checkExistence, getCurrentUser } from './_routeHelpers.js';
 
@@ -49,8 +46,7 @@ router.get('/:id', async (req, res, next) => {
       'ancestry', 
       'trainings', 
       'spells',
-      { path: 'spells', model: 'CharacterSpell', populate: { path: 'spellData', model: 'Spell' }}, 
-      { path: 'rituals', model: 'CharacterRitual', populate: { path: 'ritualData', model: 'Ritual' }}, 
+      'rituals', 
     ])
     .exec()
 
@@ -76,9 +72,8 @@ router.get('/', async (req, res, next) => {
   .populate([
     'ancestry', 
     'trainings', 
-    'spells',
-    { path: 'spells', model: 'CharacterSpell', populate: { path: 'spellData', model: 'Spell' }}, 
-    { path: 'rituals', model: 'CharacterRitual', populate: { path: 'ritualData', model: 'Ritual' }}, 
+    'spells', 
+    'rituals', 
   ])
 
   res.json({status: 200, result: characters})
@@ -99,42 +94,13 @@ router.post('/', async (req, res, next) => {
   
     req.body.ancestry = foundAncestry._id
 
-    if (req.body.spells) {
-      for (let i = 0; i < req.body.spells.length; i++) {
-        const spell = req.body.spells[i]
-        try {
-          const newCharSpell = await CharacterSpell.create({ spellData: spell })
-          req.body.spells[i] = newCharSpell._id
-
-        } catch (err) {
-          console.warn(`Unable to build spell ${spell.name} -- invalid _id`)
-        }
-
-      }
-
-    }
-
-    if (req.body.rituals) {
-      for (let i = 0; i < req.body.rituals.length; i++) {
-        const spell = req.body.rituals[i]
-        try {
-          const newCharSpell = await CharacterRitual.create({ ritualData: spell })
-          req.body.rituals[i] = newCharSpell._id
-
-        } catch (err) {
-          console.warn(`Unable to build spell ${spell.name} -- invalid _id`)
-        }
-
-      }
-
-    }
-
     const newChar = await Character.create({...req.body, user: currentUser._id})
     await newChar.populate([
       'ancestry', 
       'trainings', 
-      {path: 'spells', populate: 'spellData'}, 
-      {path: 'rituals', populate: 'ritualData'}])
+      'spells', 
+      'rituals'
+    ])
 
     // handle lucky training
     if (newChar.trainings.find(t => t.key === 'lucky')) {
@@ -174,8 +140,8 @@ router.patch('/:id', async (req, res, next) => {
       await character.populate([
         'ancestry',
         'trainings', 
-        {path: 'spells', populate: 'spellData'}, 
-        {path: 'rituals', populate: 'ritualData'}
+        'spells',
+        'rituals'
       ])
 
       // handle lucky training
@@ -240,13 +206,12 @@ router.post('/:id/spells', async (req, res, next) => {
   const characterExists = checkExistence(character, res, next)  
   if (characterExists) {
     try {
-      const charSpell = await CharacterSpell.create({spellData: {_id: req.body._id}})
-      character.spells.push(charSpell._id)
+      character.spells.push(req.body._id)
       if (req.body.cost) {
         character.gold -= req.body.cost
       }
       await character.save()
-      await character.populate({path: 'spells', populate: ['spellData']})
+      await character.populate('spells')
       res.status(202).json({status: 202, message: "Success", result: character.spells})
     } catch (error) {
       res.status(400)
@@ -259,34 +224,34 @@ router.post('/:id/spells', async (req, res, next) => {
 })
 
 
-/* PATCH /characters/:id/spells/:spellID */
-// RETURNS UPDATED LIST OF CHARACTER SPELLS
-router.patch('/:id/spells/:spellID', async (req, res, next) => {
-  const currentUser = await getCurrentUser(req)
-  if (!currentUser) {
-    return res.status(401).json({error: "No authorized users logged in"})
-  }
-  const character = await Character.findById(req.params.id).exec()
-  const characterExists = checkExistence(character, res, next)
-  const spellInCharacterList = character.spells.includes(req.params.spellID)
-  if (characterExists && spellInCharacterList) {
-    try {
-      const charSpell = await CharacterSpell.findById({_id: req.params.spellID})
-      // iterate on keys and update
-      Object.keys(req.body).forEach(key => charSpell[key] = req.body[key] )
-      // save and return
-      await charSpell.save()
-      await character.populate({path: 'spells', model: 'CharacterSpell', populate: ['spellData']})
-      res.status(202).json({status: 202, message: "Success", result: character.spells})
-    } catch (error) {
-      res.status(400)
-      next(error)
-    }
-  } else {
-    res.status(400).json({status: 400, error: 'Unable to patch spell'})
-  }
+// /* PATCH /characters/:id/spells/:spellID */
+// // RETURNS UPDATED LIST OF CHARACTER SPELLS
+// router.patch('/:id/spells/:spellID', async (req, res, next) => {
+//   const currentUser = await getCurrentUser(req)
+//   if (!currentUser) {
+//     return res.status(401).json({error: "No authorized users logged in"})
+//   }
+//   const character = await Character.findById(req.params.id).exec()
+//   const characterExists = checkExistence(character, res, next)
+//   const spellInCharacterList = character.spells.includes(req.params.spellID)
+//   if (characterExists && spellInCharacterList) {
+//     try {
+//       const charSpell = await CharacterSpell.findById({_id: req.params.spellID})
+//       // iterate on keys and update
+//       Object.keys(req.body).forEach(key => charSpell[key] = req.body[key] )
+//       // save and return
+//       await charSpell.save()
+//       await character.populate({path: 'spells', model: 'CharacterSpell', populate: ['spellData']})
+//       res.status(202).json({status: 202, message: "Success", result: character.spells})
+//     } catch (error) {
+//       res.status(400)
+//       next(error)
+//     }
+//   } else {
+//     res.status(400).json({status: 400, error: 'Unable to patch spell'})
+//   }
   
-})
+// })
 
 
 /* DELETE /characters/:id/spells/:spellID */
@@ -297,12 +262,11 @@ router.delete('/:id/spells/:spellID', async (req, res, next) => {
     return res.status(401).json({error: "No authorized users logged in"})
   }
   const character = await Character.findById(req.params.id).exec()
-  const characterExists = checkExistence(character, res, next)
-  const spellInCharacterList = character.spells.includes(req.params.spellID)
-  if (characterExists && spellInCharacterList) {
+  if ( checkExistence(character, res, next) ) {
     try {
-      await CharacterSpell.deleteOne({_id: req.params.spellID})
-      await character.populate({path: 'spells', populate: ['spellData']})
+      character.spells.filter(id => id !== req.params.id)
+      await character.save()
+      await character.populate('spells')
       res.status(202).json({status: 202, message: "Success", result: character.spells})
     } catch (error) {
       res.status(400)
@@ -329,13 +293,12 @@ router.post('/:id/rituals', async (req, res, next) => {
   const characterExists = checkExistence(character, res, next)  
   if (characterExists) {
     try {
-      const charRitual = await CharacterRitual.create({ritualData: {_id: req.body._id}})
-      character.rituals.push(charRitual._id)
+      character.rituals.push(req.body._id)
       if (req.body.cost) {
         character.gold -= req.body.cost
       }
       await character.save()
-      await character.populate({path: 'rituals', populate: ['ritualData']})
+      await character.populate('rituals')
       res.status(202).json({status: 202, message: "Success", result: character.rituals})
     } catch (error) {
       res.status(400)
@@ -350,32 +313,32 @@ router.post('/:id/rituals', async (req, res, next) => {
 
 /* PATCH /characters/:id/rituals/:ritualID */
 // RETURNS UPDATED LIST OF CHARACTER RITUALS
-router.patch('/:id/rituals/:ritualID', async (req, res, next) => {
-  const currentUser = await getCurrentUser(req)
-  if (!currentUser) {
-    return res.status(401).json({error: "No authorized users logged in"})
-  }
-  const character = await Character.findById(req.params.id).exec()
-  const characterExists = checkExistence(character, res, next)
-  const ritualInCharacterList = character.rituals.includes(req.params.ritualID)
-  if (characterExists && ritualInCharacterList) {
-    try {
-      const charRitual = await CharacterRitual.findById({_id: req.params.ritualID})
-      // iterate on keys and update
-      Object.keys(req.body).forEach(key => charRitual[key] = req.body[key] )
-      // save and return
-      await charRitual.save()
-      await character.populate({path: 'rituals', model: 'CharacterRitual', populate: ['ritualData']})
-      res.status(202).json({status: 202, message: "Success", result: character.rituals})
-    } catch (error) {
-      res.status(400)
-      next(error)
-    }
-  } else {
-    res.status(400).json({status: 400, error: 'Unable to patch ritual'})
-  }
+// router.patch('/:id/rituals/:ritualID', async (req, res, next) => {
+//   const currentUser = await getCurrentUser(req)
+//   if (!currentUser) {
+//     return res.status(401).json({error: "No authorized users logged in"})
+//   }
+//   const character = await Character.findById(req.params.id).exec()
+//   const characterExists = checkExistence(character, res, next)
+//   const ritualInCharacterList = character.rituals.includes(req.params.ritualID)
+//   if (characterExists && ritualInCharacterList) {
+//     try {
+//       const charRitual = await CharacterRitual.findById({_id: req.params.ritualID})
+//       // iterate on keys and update
+//       Object.keys(req.body).forEach(key => charRitual[key] = req.body[key] )
+//       // save and return
+//       await charRitual.save()
+//       await character.populate({path: 'rituals', model: 'CharacterRitual', populate: ['ritualData']})
+//       res.status(202).json({status: 202, message: "Success", result: character.rituals})
+//     } catch (error) {
+//       res.status(400)
+//       next(error)
+//     }
+//   } else {
+//     res.status(400).json({status: 400, error: 'Unable to patch ritual'})
+//   }
   
-})
+// })
 
 
 /* DELETE /characters/:id/rituals/:ritualID */
@@ -386,12 +349,11 @@ router.delete('/:id/rituals/:ritualID', async (req, res, next) => {
     return res.status(401).json({error: "No authorized users logged in"})
   }
   const character = await Character.findById(req.params.id).exec()
-  const characterExists = checkExistence(character, res, next)
-  const ritualInCharacterList = character.rituals.includes(req.params.ritualID)
-  if (characterExists && ritualInCharacterList) {
+  if ( checkExistence(character, res, next) ) {
     try {
-      await CharacterRitual.deleteOne({_id: req.params.ritualID})
-      await character.populate({path: 'rituals', populate: ['ritualData']})
+      character.rituals.filter(id => id !== req.params.id)
+      await character.save()
+      await character.populate('rituals')
       res.status(202).json({status: 202, message: "Success", result: character.rituals})
     } catch (error) {
       res.status(400)

@@ -27,7 +27,7 @@ const characterSchema = new Schema({
     }],
     spells: [{
       type: SchemaTypes.ObjectId,
-      ref: 'CharacterSpell'
+      ref: 'Spell'
     }],
     spellsMax: {
       type: Number,
@@ -35,7 +35,7 @@ const characterSchema = new Schema({
     },
     rituals: [{
       type: SchemaTypes.ObjectId,
-      ref: 'CharacterRitual'
+      ref: 'Ritual'
     }],
     items: [{
       epochStamp: { type: String, default: () => Date.now() },
