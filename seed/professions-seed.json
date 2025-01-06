@@ -2,57 +2,57 @@
     "professions": [
         {
             "name": "Bard",
-            "coreskill": "Performing",
-            "skills": ["Melee Combat", "Deception", "Disguise", "Reading People", "Persuasion"],
+            "coreskill": "Perform",
+            "skills": ["Melee Combat", "Deception", "Disguise", "Read People", "Persuasion"],
             "skillSlots": 3,
             "spells": 1,
             "equipmentGuaranteed": ["instrument", "backpack", "waterskin"],
             "equipmentGroups": ["Tool"],
-            "description": "Increase (d8) Performing and any 3 of Melee Combat, Deception, Disguise, Reading People, Persuasion. Learn 1 spell. Take an instrument and a tool.",
+            "description": "Increase (d8) Performing and any 3 of Melee Combat, Deception, Disguise, Read People, Persuasion. Learn 1 spell. Take an instrument and a tool.",
             "trainings": ["magicalMusician", "lucky"]
         },
         {
             "name": "Mage",
-            "coreskill": "Spellcasting",
-            "skills": ["Arcane Lore", "History Lore", "Nature Lore", "Religious Lore", "Handwriting"],
+            "coreskill": "Arcane Lore",
+            "skills": ["History Lore", "Nature Lore", "Religious Lore", "Alchemistry"],
             "skillSlots": 2,
             "spells": 2,
             "equipmentGuaranteed": ["backpack", "waterskin"],
             "equipmentGroups": [],
-            "description": "Increase (d8) Arcane Lore and any 2 of any other kind of Lore or Handwriting. Learn 2 spells.",
+            "description": "Increase (d8) Arcane Lore and any 2 of any other kind of Lore or Alchemistry. Learn 2 spells.",
             "trainings": ["arcanist", "magicInitiate"]
         },
         {
             "name": "Priest",
             "coreskill": "Religious Lore",
-            "skills": ["Melee Combat", "Medicine", "Reading People"],
+            "skills": ["Melee Combat", "Medicine", "Read People"],
             "skillSlots": 1,
             "spells": 2,
             "equipmentGuaranteed": ["backpack", "waterskin"],
             "equipmentGroups": ["Light Weapon", "Tool"],
-            "description": "Increase (d8) Religious Lore and any 1 of Melee Combat, Medicine, Reading People. Learn 2 spells. Take a light weapon and a tool.",
+            "description": "Increase (d8) Religious Lore and any 1 of Melee Combat, Medicine, Read People. Learn 2 spells. Take a light weapon and a tool.",
             "trainings": ["disciple", "druid"]
         },
         {
             "name": "Scoundrel",
-            "coreskill": "Sneaking",
-            "skills": [ "Climbing", "Deception", "Disguise", "Ranged Combat", "Running/Jumping", "Sailing", "Sleight of Hand", "Trapping" ],
+            "coreskill": "Sneak",
+            "skills": [ "Climb", "Deception", "Disguise", "Ranged Combat", "Run/Jump", "Sail", "Sleight of Hand", "Trap" ],
             "skillSlots": 3,
             "equipmentGuaranteed": ["backpack", "waterskin"],
             "equipmentGroups": ["Light Weapon", "Tool"],
             "expertise": 2,
             "specialText": "Increase two skills an additional time (d10)",
-            "description": "Increase (d8) Sneaking and any 3 from Climbing, Deception, Disguise, Ranged Combat, Running/Jumping, Sailing, Sleight of Hand, Trapping. Then increase (d10) two of them again. Take a light weapon and a tool.",
+            "description": "Increase (d8) Sneaking and any 3 from Climb, Deception, Disguise, Ranged Combat, Run/Jump, Sail, Sleight of Hand, Trap. Then increase (d10) two of them again. Take a light weapon and a tool.",
             "trainings": ["thief", "wanderer"]
         },
         {
             "name": "Warrior",
             "coreskill": "Melee Combat",
-            "skills": ["Intimidation", "Running/Jumping", "Ranged Combat", "Riding"],
+            "skills": ["Intimidation", "Run/Jump", "Ranged Combat", "Ride"],
             "skillSlots": 2,
             "equipmentGuaranteed": ["backpack", "waterskin"],
             "equipmentGroups": ["Armour", "Weapon"],
-            "description": "Increase (d8) Melee Combat and any 2 of Intimidation, Running/Jumping, Ranged Combat, Riding. Take a piece of armour and a weapon.",
+            "description": "Increase (d8) Melee Combat and any 2 of Intimidation, Run/Jump, Ranged Combat, Ride. Take a piece of armour and a weapon.",
             "trainings": ["strong", "artisan", "healer"]
         }
     ]
