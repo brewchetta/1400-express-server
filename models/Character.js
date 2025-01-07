@@ -6,7 +6,8 @@ const characterSchema = new Schema({
       type: SchemaTypes.ObjectId,
       ref: 'User'
     },
-    name: { type: String, required: true },
+    name: { type: String, required: [true, 'The character needs a name'], minLength: [1, 'The character needs a name'] },
+    gender: { type: String, default: '' },
     quirk: { type: String, default: '' },
     history: { type: String, default: '' },
     injured: { type: Boolean, default: false },
@@ -23,7 +24,7 @@ const characterSchema = new Schema({
       ref: 'Ancestry'
     },
     skills: [{
-      name: { type: String, required: [true, 'The character needs a name'], minLength: [1, 'The character needs a name'] },
+      name: { type: String, required: [true, 'The skill needs a name'], minLength: [1, 'The skill needs a name'] },
       diceSize: { type: Number, required: true }
     }],
     spells: [{
