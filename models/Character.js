@@ -23,7 +23,7 @@ const characterSchema = new Schema({
       ref: 'Ancestry'
     },
     skills: [{
-      name: { type: String, required: true },
+      name: { type: String, required: [true, 'The character needs a name'], minLength: [1, 'The character needs a name'] },
       diceSize: { type: Number, required: true }
     }],
     spells: [{
@@ -41,7 +41,7 @@ const characterSchema = new Schema({
     items: [{
       epochStamp: { type: String, default: () => uuid() },
       key: { type: String, required: true },
-      name: { type: String, required: true },
+      name: { type: String, required: [true, 'The item needs a name'], minLength: [1, 'The item needs a name'] },
       durability: Number,
       maxDurability: Number,
       cost: Number,
@@ -49,7 +49,7 @@ const characterSchema = new Schema({
       special: String,
       rules: { type: String, default: 'core' }
     }],
-    gold: { type: Number, default: 0 },
+    gold: { type: Number, default: 0, min: [0, 'Gold cannot go below zero'] },
     trainings: [{
       type: SchemaTypes.ObjectId,
       ref: 'Training'

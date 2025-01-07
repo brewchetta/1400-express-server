@@ -146,7 +146,6 @@ router.patch('/:id', async (req, res, next) => {
 
       // handle lucky training
       if (character.trainings.find(t => t.key === 'lucky')) {
-        console.log('FOUND LUCKY')
         character.luckyMaximum = 2
       } else {
         character.luckyMaximum = 1
@@ -154,15 +153,12 @@ router.patch('/:id', async (req, res, next) => {
       
       // handle magic training
       if (character.trainings.find(t => t.key === 'magicInitiate')) {
-        console.log('FOUND MAGIC INITIAITE')
         character.spellsMax = 5
       }
       if (character.trainings.find(t => t.key === 'magicAdept')) {
-        console.log('FOUND MAGIC ADEPT')
         character.spellsMax = 8
       }
       if (character.trainings.find(t => t.key === 'magicAscendant')) {
-        console.log('FOUND MAGIC ASENDANT')
         character.spellsMax = 100
       }
 
@@ -207,7 +203,6 @@ router.post('/:id/spells', async (req, res, next) => {
   if (characterExists) {
     try {
       character.spells.push(req.body._id)
-      console.log(req.body.cost)
       if (req.body.cost) {
         character.gold -= req.body.cost
       }
@@ -268,10 +263,8 @@ router.delete('/:id/spells/:spellID', async (req, res, next) => {
       {'$pull': {'spells': req.params.spellID }},
       { new: true }
     )
-    console.log(character.spells)
     // const character = await Character.findOne({_id: req.params.id, user: currentUser._id}).exec()
     await character.populate('spells')
-    console.log(character.spells)
     res.status(202).json({status: 202, message: "Success", result: character.spells})
   } catch (error) {
     res.status(400)
@@ -355,10 +348,8 @@ router.delete('/:id/rituals/:ritualID', async (req, res, next) => {
       {'$pull': {'rituals': req.params.ritualID }},
       { new: true }
     )
-    console.log(character.rituals)
     // const character = await Character.findOne({_id: req.params.id, user: currentUser._id}).exec()
     await character.populate('rituals')
-    console.log(character.rituals)
     res.status(202).json({status: 202, message: "Success", result: character.rituals})
   } catch (error) {
     res.status(400)
@@ -429,7 +420,6 @@ router.patch('/:id/items/:epochStamp', async (req, res, next) => {
   if (characterExists) {
     try {
       const item = character.items.find(item => item.epochStamp === req.params.epochStamp)
-      console.log(item, req.params.epochStamp)
       // iterate on keys and update
       Object.keys(req.body).forEach(key => item[key] = req.body[key] )
       // save character and return
