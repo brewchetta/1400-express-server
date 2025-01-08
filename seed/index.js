@@ -2,8 +2,6 @@ import mongoose from '../models/index.js'
 
 import Ancestry from '../models/Ancestry.js'
 import Character from '../models/Character.js'
-import CharacterRitual from '../models/CharacterRitual.js'
-import CharacterSpell from '../models/CharacterSpell.js'
 import ItemTemplate from '../models/ItemTemplate.js'
 import Profession from '../models/Profession.js'
 import Ritual from '../models/Ritual.js'
@@ -234,9 +232,7 @@ if (args.includes('--characters')) {
             const sp1 = spells[Math.floor(Math.random() * spells.length)]._id
             const sp2 = spells[Math.floor(Math.random() * spells.length)]._id
             if (sp1 !== sp2) {
-                const charSpell1 = await CharacterSpell.create({ spellData: sp1._id })
-                const charSpell2 = await CharacterSpell.create({ spellData: sp2._id })
-                characters[i].spells = [charSpell1._id, charSpell2._id]
+                characters[i].spells = [sp1, sp2]
             }
         }
 
@@ -244,9 +240,7 @@ if (args.includes('--characters')) {
             const r1 = rituals[Math.floor(Math.random() * rituals.length)]._id
             const r2 = rituals[Math.floor(Math.random() * rituals.length)]._id
             if (r1 !== r2) {
-                const charRitual1 = await CharacterRitual.create({ ritualData: r1._id })
-                const charRitual2 = await CharacterRitual.create({ ritualData: r2._id })
-                characters[i].rituals = [charRitual1._id, charRitual2._id]
+                characters[i].rituals = [r1,r2]
             }
         }
 

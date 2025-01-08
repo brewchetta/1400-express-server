@@ -1,7 +1,5 @@
 import express from 'express'
 import ItemTemplate from '../models/ItemTemplate.js'
-import Spell from '../models/Spell.js'
-import Ritual from '../models/Ritual.js'
 import { checkExistence } from './_routeHelpers.js'
 
 const router = express.Router();
@@ -9,23 +7,34 @@ const router = express.Router();
 
 /* GET /items */
 router.get('/', async (req, res, next) => {
-// TODO: names query currently not working (partially due to not capitalizing)
-    const items = await ItemTemplate.find({...req.query})
-    res.json({status: 200, result: items, query: req.query, categories: ItemTemplate.categories})
+
+  let items
+
+  if (req.query.name) { // WITH QUERIES
+    items = await ItemTemplate.find({ 
+      name: { "$regex": '.*' + (req?.query?.name || '') + '.*', "$options": 'i' }
+    }).limit(10)
+  }
+
+  else { // DEFAULT WITHOUT QUERIES
+    items = await ItemTemplate.find({ rules: "core" })
+  }
+
+  res.json({status: 200, result: items, query: req.query, categories: ItemTemplate.categories})
 });
 
 
 /* GET /items/:id */
 router.get('/:id', async (req, res, next) => {
-    try {
-        const item = await ItemTemplate.findById(req.params.id).exec()
-        if (checkExistence(item, res, next)) {
-          res.json({status: 200, result: item})
-        }
-      } catch (err) {
-        res.status(500)
-        next(err)
+  try {
+      const item = await ItemTemplate.findById(req.params.id).exec()
+      if (checkExistence(item, res, next)) {
+        res.json({status: 200, result: item})
       }
+    } catch (err) {
+      res.status(500)
+      next(err)
+    }
 });
 
 

@@ -29,6 +29,10 @@ At any point you can access the help for seeding with:
 node seed/index.js -h
 ```
 
-## Client Building
+## Client Building & Production Preflight
 
-Copy production `build` directory from React into top level of server. Rename to `client`. Remove all mentions of `1400-custom-character-builder` from paths.
+In development client move notes into changelog and update version number.
+
+Copy production `build` directory from React into top level of server. Rename to `client`. 
+
+Remove all mentions of `1400-custom-character-builder` from paths.

@@ -1,11 +1,13 @@
 import  { Schema, SchemaTypes, model } from 'mongoose'
+import { v4 as uuid } from 'uuid'
 
 const characterSchema = new Schema({
     user: {
       type: SchemaTypes.ObjectId,
       ref: 'User'
     },
-    name: { type: String, required: true },
+    name: { type: String, required: [true, 'The character needs a name'], minLength: [1, 'The character needs a name'] },
+    gender: { type: String, default: '' },
     quirk: { type: String, default: '' },
     history: { type: String, default: '' },
     injured: { type: Boolean, default: false },
@@ -22,12 +24,12 @@ const characterSchema = new Schema({
       ref: 'Ancestry'
     },
     skills: [{
-      name: { type: String, required: true },
+      name: { type: String, required: [true, 'The skill needs a name'], minLength: [1, 'The skill needs a name'] },
       diceSize: { type: Number, required: true }
     }],
     spells: [{
       type: SchemaTypes.ObjectId,
-      ref: 'CharacterSpell'
+      ref: 'Spell'
     }],
     spellsMax: {
       type: Number,
@@ -35,12 +37,12 @@ const characterSchema = new Schema({
     },
     rituals: [{
       type: SchemaTypes.ObjectId,
-      ref: 'CharacterRitual'
+      ref: 'Ritual'
     }],
     items: [{
-      epochStamp: { type: String, default: () => Date.now() },
+      epochStamp: { type: String, default: () => uuid() },
       key: { type: String, required: true },
-      name: { type: String, required: true },
+      name: { type: String, required: [true, 'The item needs a name'], minLength: [1, 'The item needs a name'] },
       durability: Number,
       maxDurability: Number,
       cost: Number,
@@ -48,7 +50,7 @@ const characterSchema = new Schema({
       special: String,
       rules: { type: String, default: 'core' }
     }],
-    gold: { type: Number, default: 0 },
+    gold: { type: Number, default: 0, min: [0, 'Gold cannot go below zero'] },
     trainings: [{
       type: SchemaTypes.ObjectId,
       ref: 'Training'
@@ -62,35 +64,40 @@ const characterSchema = new Schema({
 const Character = model('Character', characterSchema)
 
 Character.acceptedSkillNames = [
-  "Arcane Lore",
-  "Climbing",
-  "Cooking",
-  "Crafting",
-  "Deception",
-  "Disguise",
-  "Engineering",
-  "Foraging",
-  "Handwriting",
-  "Intimidation",
-  "History Lore",
-  "Medicine",
+  // ACTION SKILLS
   "Melee Combat",
-  "Nature Lore",
   "Navigation",
-  "Performing",
-  "Persuasion",
-  "Ranged Combat",
-  "Reading People",
-  "Religious Lore",
-  "Riding",
-  "Running/Jumping",
-  "Sailing",
   "Perception",
+  "Ranged Combat",
+  "Ride",
+  "Run/Jump",
+  "Sail",
   "Sleight of Hand",
-  "Sneaking",
-  "Swimming",
-  "Tracking",
-  "Trapping",
+  "Sneak",
+  "Swim",
+  "Track",
+  "Trap",
+  // SOCIAL SKILLS
+  "Deception",
+  "Intimidation",
+  "Perform",
+  "Persuasion",
+  "Read People",
+  // LORE SKILLS
+  "Arcane Lore",
+  "History Lore",
+  "Nature Lore",
+  "Religious Lore",
+  // CRAFT SKILLS
+  "Alchemistry",
+  "Build",
+  "Cook",
+  "Climb",
+  "Engineer",
+  "Forage",
+  "Medicine",
+  "Metalwork",
+  "Tailor",
 ]
 
 export default Character

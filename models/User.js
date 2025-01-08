@@ -6,7 +6,7 @@ import Character from './Character.js'
 const saltRounds = 10
 
 const userSchema = new Schema({
-    username: { type: String, required: true, index: { unique: true } },
+    username: { type: String, required: true, index: { unique: true }, minLength: [3, 'Username must be at least 3 characters'] },
     email: { type: String, required: true, index: { unique: true } },
     profilePicURL: String,
     password: { type: String, required: true, select: false },
@@ -20,6 +20,8 @@ userSchema.pre('save', function(next) {
     
     // ignore if password is unmodified
     if (!user.isModified('password')) return
+
+    // TODO: throw error on invalid password validation!
     
     // otherwise generate salt and apply to password hash
     bcrypt.genSalt(saltRounds, function(err, salt) {
