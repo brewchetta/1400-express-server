@@ -17,7 +17,7 @@ router.get('/', async (req, res, next) => {
   }
 
   else { // DEFAULT WITHOUT QUERIES
-    items = await ItemTemplate.find({})
+    items = await ItemTemplate.find({ rules: "core" })
   }
 
   res.json({status: 200, result: items, query: req.query, categories: ItemTemplate.categories})
