@@ -1,11 +1,25 @@
 import express from 'express'
 import StoryGroup from '../models/StoryGroup.js'
-import User from '../models/User.js'
-import Character from '../models/Character.js'
 import GroupPlayer from '../models/GroupPlayer.js'
-import { checkExistence, getCurrentUser } from './_routeHelpers.js'
+import { getCurrentUser } from './_routeHelpers.js'
 
 const router = express.Router();
+
+
+/* GET /story-groups */
+router.get('/', async (req, res, next) => {
+    const currentUser = await getCurrentUser(req)
+    if (!currentUser) {
+        return res.status(401).json({error: "No authorized users logged in"})
+    }
+
+    console.log(currentUser._id)
+    
+    const ownedGroups = await StoryGroup.find({ 'owner': currentUser._id })
+    const playerRoles = await GroupPlayer.find({ 'user': currentUser._id }).populate(['character', 'storyGroup'])
+
+    res.json({ status: 200, result: { ownedGroups, playerRoles } })
+});
 
 
 /* GET /story-groups/:id */
@@ -32,7 +46,7 @@ router.get('/:id', async (req, res, next) => {
 
     await group.populate('owner')
 
-    res.json({ status: 200, result: { storyGroup: group, players: groupPlayers } })
+    res.json({ status: 200, result: { storyGroup: group, players: groupPlayers, isOwner: isGroupOwner } })
 });
 
 
@@ -46,29 +60,6 @@ router.post('/', async (req, res, next) => {
     try {
         const newGroup = await StoryGroup.create({...req.body, owner: currentUser._id})
         res.status(201).json({ status: 201, result: newGroup })
-    } catch (err) {
-        res.status(400)
-        next(err)
-    }
-})
-
-
-/* POST /story-groups/:id/invite */
-router.post('/:id/invite', async (req, res, next) => {
-    const currentUser = await getCurrentUser(req)
-    if (!currentUser) {
-        return res.status(401).json({error: "No authorized users logged in"})
-    }
-
-    const group = await StoryGroup.findById({ '_id': req.params.id }).exec()
-
-    if (!group || !group.owner.equals(currentUser._id)) {
-        return res.status(401).json({error: "You are not the owner of this group"})
-    }
-
-    try {
-        const groupPlayer = await GroupPlayer.create({ ...req.body, storyGroup: group._id })
-        res.status(201).json({ status: 201, result: groupPlayer })
     } catch (err) {
         res.status(400)
         next(err)
