@@ -19,6 +19,8 @@ import spellsRouter from './routes/spells.js'
 import ritualsRouter from './routes/rituals.js'
 import trainingsRouter from './routes/trainings.js'
 import usersRouter from './routes/users.js'
+import storyGroupsRouter from './routes/story-groups.js'
+import storyPlayersRouter from './routes/story-players.js'
 
 
 dotenv.config()
@@ -59,6 +61,8 @@ app.use('/rituals', ritualsRouter);
 app.use('/spells', spellsRouter);
 app.use('/trainings', trainingsRouter);
 app.use('/users', usersRouter);
+app.use('/story-groups', storyGroupsRouter);
+app.use('/story-players', storyPlayersRouter);
 
 app.use('/*', (req, res, next) => {
     if (/(.ico|.js|.css|.jpg|.png|.map|.svg)$/i.test(req.path)) {
