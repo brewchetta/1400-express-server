@@ -22,7 +22,10 @@ const groupPlayerSchema = new Schema({
   storyNotes: {
     type: String,
     default: ''
-  }
+  },
+  worldbuildingQuestions: [
+    { question: String, answer: String }
+  ]
 }, {timestamps: true});
 
 const GroupPlayer = model('GroupPlayer', groupPlayerSchema)

@@ -49,9 +49,6 @@ router.patch('/:id', async (req, res, next) => {
 
     const groupPlayer = await GroupPlayer.findById({'_id': req.params.id}).exec()
 
-    console.log(groupPlayer.user)
-    console.log(currentUser._id)
-
     if (!groupPlayer || !currentUser._id.equals(groupPlayer.user)) {
         return res.status(401).json({error: "You don't have permission to edit this"})
     }
@@ -59,7 +56,37 @@ router.patch('/:id', async (req, res, next) => {
     try {
         Object.keys(req.body).forEach(key => groupPlayer[key] = req.body[key] )
         await groupPlayer.save()
-        await groupPlayer.populate(['character'])
+        await groupPlayer.populate(['user', 'character'])
+        res.status(202).json({ status: 202, result: groupPlayer })
+    } catch (err) {
+        res.status(400)
+        next(err)
+    }
+
+})
+
+
+/* POST /story-players/:id/worldbuilding */
+router.post('/:id/worldbuilding', async (req, res, next) => {
+    const currentUser = await getCurrentUser(req)
+    if (!currentUser) {
+        return res.status(401).json({error: "No authorized users logged in"})
+    }
+
+    const groupPlayer = await GroupPlayer.findById({'_id': req.params.id}).exec()
+
+    if (!groupPlayer || !currentUser._id.equals(groupPlayer.user)) {
+        return res.status(401).json({error: "You don't have permission to edit this"})
+    }
+
+    try {
+        const updatedQuestions = [
+            ...groupPlayer?.worldbuildingQuestions || [], 
+            { "question": req.body.question, "answer": req.body.answer }
+        ]
+        groupPlayer.worldbuildingQuestions = updatedQuestions
+        await groupPlayer.save()
+        await groupPlayer.populate(['user', 'character'])
         res.status(202).json({ status: 202, result: groupPlayer })
     } catch (err) {
         res.status(400)

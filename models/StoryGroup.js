@@ -1,5 +1,4 @@
 import  { Schema, SchemaTypes, model } from 'mongoose'
-import GroupPlayer from './GroupPlayer.js'
 
 const storyGroupSchema = new Schema({
     owner: {
