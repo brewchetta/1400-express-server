@@ -56,8 +56,32 @@ router.patch('/:id', async (req, res, next) => {
     try {
         Object.keys(req.body).forEach(key => groupPlayer[key] = req.body[key] )
         await groupPlayer.save()
-        await groupPlayer.populate(['user', 'character'])
+        await groupPlayer.populate(['user', 'character', 'storyGroup'])
         res.status(202).json({ status: 202, result: groupPlayer })
+    } catch (err) {
+        res.status(400)
+        next(err)
+    }
+
+})
+
+
+/* PATCH /story-players/:id */
+router.delete('/:id', async (req, res, next) => {
+    const currentUser = await getCurrentUser(req)
+    if (!currentUser) {
+        return res.status(401).json({error: "No authorized users logged in"})
+    }
+
+    const groupPlayer = await GroupPlayer.findById({'_id': req.params.id}).exec()
+
+    if (!groupPlayer || !currentUser._id.equals(groupPlayer.user)) {
+        return res.status(401).json({error: "You don't have permission to delete this"})
+    }
+
+    try {
+        const player = await GroupPlayer.findByIdAndDelete({'_id': req.params.id}).exec()
+        res.status(202).json({ status: 202, result: player })
     } catch (err) {
         res.status(400)
         next(err)
