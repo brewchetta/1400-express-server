@@ -12,8 +12,6 @@ router.get('/', async (req, res, next) => {
     if (!currentUser) {
         return res.status(401).json({error: "No authorized users logged in"})
     }
-
-    console.log(currentUser._id)
     
     const ownedGroups = await StoryGroup.find({ 'owner': currentUser._id })
     const playerRoles = await GroupPlayer.find({ 'user': currentUser._id }).populate(['character', 'storyGroup'])
@@ -31,9 +29,6 @@ router.get('/:id', async (req, res, next) => {
     
     const group = await StoryGroup.findById({ '_id': req.params.id }).exec()
     const groupPlayers = await GroupPlayer.find({ storyGroup: req.params.id }).populate(['user', 'character'])
-    
-    console.log(group)
-    console.log(groupPlayers)
 
     const groupExists = !!group
     const isGroupOwner = !!group?.owner?.equals(currentUser._id)
