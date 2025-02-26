@@ -38,3 +38,7 @@ export function generateToken(_id, expiresIn='24h') {
         { expiresIn }
     ) 
 }
+
+export function isCurrentUserCharacter(currentUser, character) {
+    return currentUser._id.equals(character.user)
+}
