@@ -1,13 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.6f7b666c.css",
-    "main.js": "/static/js/main.f29f5a0f.js",
+    "main.css": "/static/css/main.597e07f3.css",
+    "main.js": "/static/js/main.028e2563.js",
     "static/media/tavern-exterior.png": "/static/media/tavern-exterior.a22adaf4624fc836b5e1.png",
     "static/media/tavern-exterior-dark.png": "/static/media/tavern-exterior-dark.c98a11afa201e18969f0.png",
     "static/media/spellbook.png": "/static/media/spellbook.21f12e4e25874b99e0c3.png",
     "static/media/spellbook-dark.png": "/static/media/spellbook-dark.eb1ec835866f54501e68.png",
     "static/media/castle-ruins.png": "/static/media/castle-ruins.0cc1b0c1fcf0e7a27d8e.png",
     "static/media/castle-ruins-dark.png": "/static/media/castle-ruins-dark.c8fb56ccc75049c292aa.png",
+    "static/media/tavern-interior-dark.png": "/static/media/tavern-interior-dark.72b745325fa9e0e7529b.png",
+    "static/media/tavern-interior.png": "/static/media/tavern-interior.a3f6cfa0bb6058d95d5f.png",
     "static/media/chalk-swatch.png": "/static/media/chalk-swatch.48c40961d54f81ff559c.png",
     "static/media/scratch-wallpaper-dark.png": "/static/media/scratch-wallpaper-dark.b96adffeb712f5a8b584.png",
     "static/media/scratch-wallpaper.png": "/static/media/scratch-wallpaper.7138aba220d9516dcdf1.png",
@@ -43,11 +45,11 @@
     "static/media/checkbox-frame-dark.png": "/static/media/checkbox-frame-dark.74e962b326d5a67889a7.png",
     "static/media/chest-icon.png": "/static/media/chest-icon.a6b25a6d8a3d95b892ab.png",
     "index.html": "/index.html",
-    "main.6f7b666c.css.map": "/static/css/main.6f7b666c.css.map",
-    "main.f29f5a0f.js.map": "/static/js/main.f29f5a0f.js.map"
+    "main.597e07f3.css.map": "/static/css/main.597e07f3.css.map",
+    "main.028e2563.js.map": "/static/js/main.028e2563.js.map"
   },
   "entrypoints": [
-    "static/css/main.6f7b666c.css",
-    "static/js/main.f29f5a0f.js"
+    "static/css/main.597e07f3.css",
+    "static/js/main.028e2563.js"
   ]
 }
