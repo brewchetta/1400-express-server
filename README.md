@@ -36,3 +36,5 @@ In development client move notes into changelog and update version number.
 Copy production `build` directory from React into top level of server. Rename to `client`. 
 
 Remove all mentions of `1400-custom-character-builder` from paths.
+
+Merge into `production` branch.
