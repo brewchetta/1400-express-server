@@ -124,6 +124,34 @@ router.post('/:id/worldbuilding', async (req, res, next) => {
 
 })
 
+/* DELETE /story-players/:id/worldbuilding/:questionID */
+router.delete('/:id/worldbuilding/:questionID', async (req, res, next) => {
+    const currentUser = await getCurrentUser(req)
+    if (!currentUser) {
+        return res.status(401).json({error: "No authorized users logged in"})
+    }
+    
+    const groupPlayer = await GroupPlayer.findById({'_id': req.params.id}).exec()
+    
+    if (!groupPlayer || !currentUser._id.equals(groupPlayer.user)) {
+        return res.status(401).json({error: "You don't have permission to edit this"})
+    }
+
+    try {
+        const updatedPlayer = await GroupPlayer.findOneAndUpdate(
+            {_id: req.params.id},
+            {'$pull': {'worldbuildingQuestions': {'_id': req.params.questionID} }},
+            { new: true }
+        )
+        await updatedPlayer.populate(['user', 'character'])
+        console.log(updatedPlayer.worldbuildingQuestions)
+        res.status(202).json({status: 202, result: updatedPlayer})
+    } catch (err) {
+        res.status(400)
+        next(err)
+    }
+})
+
 
 /* POST /story-players/:id/character */
 router.post('/:id/characters', async (req, res, next) => {
