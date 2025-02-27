@@ -1,4 +1,5 @@
 -------- Features --------
+- add image for readme
 - notes sections (character, story, secrets, etc.)
 - group notes (certain character notes get automatically added to group notes?)
 - toasts
