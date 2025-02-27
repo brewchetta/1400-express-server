@@ -1,0 +1,105 @@
+@use "variables";
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  color: variables.$checkbox-color;
+  cursor: pointer;
+  width: variables.$checkbox-size;
+  height: variables.$checkbox-size;
+  border: variables.$checkbox-border-width solid currentColor;
+  transform: translateY(0.3em);
+  position: relative;
+  background-size: contain;
+  background-position: left;
+
+  &.crossmark, &.checkmark {
+    background-image: url('../assets/images/checkbox-frame.png');
+    border: none;
+    padding: variables.$checkbox-border-width;
+  }
+
+  &.boxmark::before {
+    display: block;
+    content: "";
+    width: variables.$checkbox-mark-size;
+    height: variables.$checkbox-mark-size;
+    transform: scale(0) translateX(-50%) translateY(-50%);
+    background-color: currentColor;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+
+  &.boxmark:checked::before {
+    transform: scale(1) translateX(-50%) translateY(-50%);
+    transition: color 0.3s;
+  }
+
+  &.checkmark::before {
+    display: block;
+    content: "";
+    width: variables.$checkbox-mark-size;
+    height: variables.$checkbox-mark-size;
+    background-size: cover;
+    opacity: 0;
+    background-image: url('../assets/images/checkmark.png');
+    transform: scale(3.5) translateX(0%) translateY(10%);
+    transition: opacity 0.15s;
+  }
+
+  &.checkmark:checked::before {
+    opacity: 1;
+  }
+
+  &.crossmark::before {
+    display: block;
+    content: "";
+    width: variables.$checkbox-mark-size;
+    height: variables.$checkbox-mark-size;
+    background-size: cover;
+    opacity: 0;
+    background-image: url('../assets/images/checkbox-X.png');
+    transform: scale(3) translateX(10%) translateY(20%);
+    transition: opacity 0.1s;
+  }
+
+  &.crossmark:checked::before {
+    opacity: 1;
+  }
+
+  &:disabled {
+    cursor: default;
+    filter: contrast(0);
+  }
+
+  & + label {
+    color: variables.$checkbox-color;
+  }
+
+  &:disabled + label {
+    filter: contrast(0);
+  }
+
+}
+
+.crossable-checkbox input[type="checkbox"] {
+  &:checked + label {
+    text-decoration: line-through;
+  }
+}
+
+.App.dark-mode input[type="checkbox"] {
+
+  &.crossmark, &.checkmark {
+    background-image: url('../assets/images/checkbox-frame-dark.png');
+  }
+
+  &.checkmark::before {
+    background-image: url('../assets/images/checkmark-dark.png');
+  }
+
+  &.crossmark::before {
+    background-image: url('../assets/images/checkbox-X-dark.png');
+  }
+}

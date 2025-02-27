@@ -1,5 +1,7 @@
 # 1400 Server - Express
 
+## Getting Started
+
 ## Development
 
 Starting the server in debug mode:

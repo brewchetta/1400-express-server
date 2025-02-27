@@ -1,0 +1,59 @@
+@use "variables";
+
+@mixin padding-and-margin($name, $size) {
+  .padding-#{$name} {
+    padding: $size;
+  }
+
+  .padding-top-#{$name} {
+    padding-top: $size;
+  }
+
+  .padding-bottom-#{$name} {
+    padding-bottom: $size;
+  }
+
+  .margin-#{$name} {
+    margin: $size;
+  }
+
+  .margin-top-#{$name} {
+    margin-top: $size;
+  }
+
+  .margin-bottom-#{$name} {
+    margin-bottom: $size;
+  }
+}
+
+@each $name, $size in variables.$spacings {
+  @include padding-and-margin($name, $size);
+}
+
+.position-top-left {
+  position: absolute;
+  top: variables.$spacing-small;
+  left: variables.$spacing-small;
+}
+
+.position-top-right {
+  position: absolute;
+  top: variables.$spacing-small;
+  right: variables.$spacing-small;
+}
+
+.position-bottom-left {
+  position: absolute;
+  bottom: variables.$spacing-small;
+  left: variables.$spacing-small;
+}
+
+.position-bottom-right {
+  position: absolute;
+  bottom: variables.$spacing-small;
+  right: variables.$spacing-small;
+}
+
+.relative {
+  position: relative;
+}

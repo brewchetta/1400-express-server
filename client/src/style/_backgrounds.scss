@@ -1,0 +1,235 @@
+@use "sass:color";
+@use "variables";
+
+//// color backgrounds ////
+
+@each $name, $value in variables.$colors {
+  .background-#{$name} {
+    background-color: $value;
+  }
+}
+
+//// specialty backgrounds ////
+
+@mixin image-background-mixin($url, $position, $size: 50%) {
+    background-image: url($url);
+    background-repeat: no-repeat;
+    background-size: $size;
+    background-position: $position;
+}
+
+.semi-transparent-background {
+  background-color: #fffe;
+}
+
+.chalk-background {
+  background-image: url('../assets/images/chalk-swatch.png');
+  background-size: 100vw 100%;
+  min-height: 50vh;
+  background-position: center;
+}
+
+input.background-transparent:hover, button.background-transparent:hover {
+  background-color: #0000;
+}
+
+.alchemy-symbols-background {
+  @include image-background-mixin('../assets/images/alchemy-symbols.png', center center, 20%);
+}
+
+.arrows-background {
+  @include image-background-mixin('../assets/images/crossed-arrows.png', center center, 20%);
+}
+
+.castle-ruins-background {
+  @include image-background-mixin('../assets/images/castle-ruins.png', bottom right);
+}
+
+.dice-background {
+  @include image-background-mixin('../assets/images/dice-sizes.png', center center)
+}
+
+.flock-background {
+  @include image-background-mixin('../assets/images/flock.png', top right, 20%)
+}
+
+.magic-circle-background {
+  @include image-background-mixin('../assets/images/magic-circle.png', center center, 20%);
+}
+
+.quill-background {
+  @include image-background-mixin('../assets/images/quill-drawing.png', center center, 20%);
+}
+
+.scratchwallpaper-background {
+  @include image-background-mixin('../assets/images/scratch-wallpaper.png', center center, cover);
+}
+
+.spellbook-background {
+  @include image-background-mixin('../assets/images/spellbook.png', center center)
+}
+
+.tavern-background {
+  @include image-background-mixin('../assets/images/tavern-exterior.png', bottom center);
+}
+
+.tavern-interior-background {
+  @include image-background-mixin('../assets/images/tavern-interior.png', bottom left, 75%);
+}
+
+.town-skyline-background {
+  @include image-background-mixin('../assets/images/medeival-town-skyline.png', bottom right, 60%)
+}
+
+// dark mode specialty backgrounds //
+
+.dark-mode {
+  
+  &.arrows-background, .arrows-background {
+    @include image-background-mixin('../assets/images/crossed-arrows-dark.png', center center, 20%);
+  }
+  
+  &.alchemy-symbols-background, .alchemy-symbols-background {
+    @include image-background-mixin('../assets/images/alchemy-symbols-dark.png', center center, 20%);
+  }
+
+  &.dice-background {
+    @include image-background-mixin('../assets/images/dice-sizes-dark.png', center center)
+  }
+
+  &.castle-ruins-background, .castle-ruins-background {
+    @include image-background-mixin('../assets/images/castle-ruins-dark.png', bottom right);
+  }
+
+  &.magic-circle-background, .magic-circle-background {
+    @include image-background-mixin('../assets/images/magic-circle-dark.png', center center, 20%);
+  }
+  
+  &.flock-background, .flock-background {
+    @include image-background-mixin('../assets/images/flock-dark.png', top right, 20%)
+  }
+  
+  &.quill-background, .quill-background {
+    @include image-background-mixin('../assets/images/quill-drawing-dark.png', center center, 20%);
+  }
+
+  &.scratchwallpaper-background, .scratchwallpaper-background {
+    @include image-background-mixin('../assets/images/scratch-wallpaper-dark.png', center center, cover);
+  }
+
+  &.spellbook-background, .spellbook-background {
+    @include image-background-mixin('../assets/images/spellbook-dark.png', center center)
+  }
+
+  &.tavern-background, .tavern-background {
+    @include image-background-mixin('../assets/images/tavern-exterior-dark.png', bottom center);
+  }
+
+  &.tavern-interior-background, .tavern-interior-background {
+    @include image-background-mixin('../assets/images/tavern-interior-dark.png', bottom left, 75%);
+  }
+
+  &.town-skyline-background, .town-skyline-background {
+    @include image-background-mixin('../assets/images/medeival-town-skyline-dark.png', bottom right, 60%)
+  }
+}
+
+//// PAINT SWATCH ON HOVER ////
+
+@mixin swatch-hover-mixin( $hue-rotate, $brightness ) {
+  position: relative;
+  z-index: 1;
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 10%;
+    left: 0%;
+    width: 0%;
+    height: 80%;
+    max-height: 3em;
+    background-image: url('../assets/images/paint-swatch-2.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    // background-position: center;
+    z-index: -1;
+    transition: width 0.05s;
+    filter: hue-rotate($hue-rotate) brightness($brightness);
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+$swatch-rotations-light: (
+  "pink": 0deg,
+  "orange": 30deg,
+  "yellow": 60deg,
+  "lime": 90deg,
+  "green": 120deg,
+  "aqua": 150deg,
+  "cyan": 180deg,
+  "sky-blue": 210deg,
+  "lavender": 240deg,
+  "purple": 270deg,
+  "hot-pink": 300deg,
+);
+
+@each $name, $rotation in $swatch-rotations-light {
+  .swatch-hover-background-#{$name} {
+    @include swatch-hover-mixin($rotation, 1);
+  }
+}
+
+
+.swatch-hover-background-alternating {
+  &:nth-child(6n) {
+    @include swatch-hover-mixin(0deg, 1);
+  }
+  &:nth-child(6n - 1) {
+    @include swatch-hover-mixin(60deg, 1);
+  }
+  &:nth-child(6n - 2) {
+    @include swatch-hover-mixin(120deg, 1);
+  }
+  &:nth-child(6n - 3) {
+    @include swatch-hover-mixin(180deg, 1);
+  }
+  &:nth-child(6n - 4) {
+    @include swatch-hover-mixin(240deg, 1);
+  }
+  &:nth-child(6n - 5) {
+    @include swatch-hover-mixin(270deg, 1);
+  }
+}
+
+//// DARK MODE STYLES ////
+
+.dark-mode {
+  .chalk-background {
+    h2, span {
+      color: white;
+    }
+  }
+  
+  .semi-transparent-background {
+    background-color: #222e;
+  }
+
+  .background-black {
+    background-color: variables.$white;
+  }
+
+  .background-white {
+    background-color: variables.$black;
+  }
+
+  .background-dark-grey {
+    background-color: variables.$light-grey;
+  }
+
+  .background-light-grey {
+    background-color: variables.$dark-grey;
+  }
+}

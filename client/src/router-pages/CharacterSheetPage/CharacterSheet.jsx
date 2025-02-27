@@ -1,0 +1,79 @@
+import { useEffect, useState } from 'react'
+import CharacterBio from './CharacterBio/CharacterBio'
+import CharacterSkills from "./CharacterSkills/CharacterSkills"
+import CharacterTraining from './CharacterTraining/CharacterTraining'
+import CharacterEquipment from "./CharacterEquipment/CharacterEquipment"
+import CharacterSpells from "./CharacterSpells/CharacterSpells"
+import CharacterRituals from "./CharacterRituals/CharacterRituals"
+import CharacterNotes from "./CharacterNotes/CharacterNotes"
+import EquipmentStore from "./EquipmentStore/EquipmentStore"
+import SideDrawer from "shared/SideDrawer"
+import LoadingAnimation from 'shared/LoadingAnimation'
+
+import { useParams } from 'react-router-dom'
+import { useCharacterContext } from 'context/CharacterContext'
+import { useLoadingContext } from 'context/LoadingContext'
+
+import { getCharacter } from 'async/fetch-characters'
+import CharacterLevelUp from './CharacterLevelUp'
+
+function CharacterSheet() {
+
+  const { currentCharacter, setCurrentCharacter } = useCharacterContext()
+  const { loading } = useLoadingContext()
+
+  const [storeOpen, setStoreOpen] = useState(false)
+  const [levelUpOpen, setLevelUpOpen] = useState(false)
+  
+
+  const params = useParams()
+
+  async function fetchCurrentCharacter() {
+    const res = await getCharacter(params.id)
+    if (res.ok) {
+      const data = await res.json()
+      setCurrentCharacter(data.result)
+    } else if (res.status === 404) {
+      alert('404 - Character not found')
+    } else {
+      console.warn('Something went wrong...')
+    }
+  }
+
+  
+  useEffect(() => {
+    fetchCurrentCharacter()
+  }, [params.id]) // eslint-disable-line react-hooks/exhaustive-deps
+
+
+  if (currentCharacter._id && !loading) {
+    return (
+      <>
+        <div className="grid-columns-large standard-gap">
+          <CharacterBio setLevelUpOpen={setLevelUpOpen} />
+          <CharacterNotes />
+          <CharacterSkills />
+          <CharacterTraining />
+          <CharacterSpells displayCondition={currentCharacter.spells?.length} />
+          <CharacterRituals displayCondition={currentCharacter.rituals?.length} /> 
+          
+        </div>
+
+        <CharacterEquipment setStoreOpen={setStoreOpen} />
+
+        <SideDrawer isOpen={storeOpen} setIsOpen={setStoreOpen} className="background-white">
+          <EquipmentStore displayCondition={storeOpen} />
+        </SideDrawer>
+
+        <SideDrawer isOpen={levelUpOpen} setIsOpen={setLevelUpOpen} className="background-white">
+          <CharacterLevelUp setLevelUpOpen={setLevelUpOpen} levelUpOpen={levelUpOpen} />
+        </SideDrawer>
+      </>
+    )
+  } else {
+    return <LoadingAnimation /> // TODO: add short loading animation for incoming character
+  }
+
+}
+
+export default CharacterSheet

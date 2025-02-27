@@ -1,0 +1,25 @@
+.bottom-drawer {
+
+  z-index: 10;
+
+  position: fixed;
+  top: 10svh;
+  left: 50svw;
+  height: 85svh;
+  width: 90svw;
+
+  transition: top 1s;
+
+  transform: translate(-50%);
+
+  overflow-y: auto;
+
+  &.open {
+    top: 10svh;
+  }
+
+  &.closed {
+    top: 120svh;
+  }
+
+}

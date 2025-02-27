@@ -1,0 +1,29 @@
+@use "variables";
+
+@mixin tiny-screen-and-larger {
+  @media (min-width: #{variables.$tiny-screen}) { @content; }
+}
+
+@mixin tiny-screen-only {
+  @media (max-width: #{variables.$tiny-screen}) { @content; }
+}
+
+@mixin small-screen-and-larger {
+  @media (min-width: #{variables.$small-screen}) { @content; }
+}
+
+@mixin small-screen-only {
+  @media (max-width: #{variables.$small-screen}) { @content; }
+}
+
+@mixin medium-screen-and-larger {
+  @media (min-width: #{variables.$medium-screen}) { @content; }
+}
+
+@mixin large-screen-only {
+  @media (min-width: #{variables.$large-screen}) { @content; }
+}
+
+@mixin gigantic-screen-only {
+  @media (min-width: #{variables.$gigantic-screen}) { @content; }
+}

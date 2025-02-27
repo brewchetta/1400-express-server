@@ -1,0 +1,42 @@
+-------- Features --------
+- notes sections (character, story, secrets, etc.)
+- group notes (certain character notes get automatically added to group notes?)
+- toasts
+- add background for character levelup
+- shortfolk ancestry
+- undead ancestry
+- copy character option
+- email validations
+- email notifications (for example when invited to a story group)
+- password reset via email
+- items forge for making / sharing / shopping for custom items
+- user profile pictures
+- character portraits
+- give group ownership to another user (preferably with additional validation just to be sure)
+- safety sheet (lines and veils) with link to lines and veils originator
+- delete story groups and leave story groups
+
+-------- Refactors --------
+- REMINDER: always add new images to preloading manifest as you put them in
+- help button for level up option
+- rules rewrite for more narrative play
+- text formatting for notes
+- add / remove sums of gold at a time
+- fetch context with animations to show when network requests are occuring (spinning hourglass?)
+- invites to a group send an email
+- refactor backend using node express best practices
+- group owner needs ability to delete any worldbuilding question/answer
+
+-------- Bugs --------
+- fix users being added to same group multiple times
+- spells and rituals aren't in the store search yet
+- fix graphical jitter on incoming help messages
+- empty tavern needs white text in dark mode (use `text-black`) to match other text
+- change buttons on mobile (showing up as blue or with blue text)
+- fix notes form on mobile
+- on mobile clicking a level up option needs to scroll down to the options
+- items store on mobile needs fix for row sizes
+- help buttons for inputs can activate when pressing enter
+- clear button exists when non-owners visit character
+
+-------- Completed --------

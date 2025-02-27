@@ -1,0 +1,75 @@
+@use "variables";
+
+@mixin border-colored($color) {
+  border: solid $color variables.$standard-border-width;
+}
+
+@each $color-name, $color-value in variables.$colors {
+  .border-#{$color-name} {
+    @include border-colored($color-value);
+  }
+}
+
+@mixin border-top-colored($color) {
+  border-top: solid $color variables.$standard-border-width;
+}
+
+@mixin border-bottom-colored($color) {
+  border-bottom: solid $color variables.$standard-border-width;
+}
+
+@each $color-name, $color-value in variables.$colors {
+  .border-top-#{$color-name} {
+    @include border-top-colored($color-value);
+  }
+}
+
+@each $color-name, $color-value in variables.$colors {
+  .border-bottom-#{$color-name} {
+    @include border-bottom-colored($color-value);
+  }
+}
+
+@each $color-name, $color-value in variables.$colors {
+  .border-#{$color-name}-hover {
+    @include border-colored(variables.$transparent);
+
+    &:hover {
+      @include border-colored($color-value);
+    }
+  }
+}
+
+.border-none {
+  border: none;
+}
+
+//// DARK MODE STYLES ////
+
+.dark-mode {
+
+  .border-black {
+    @include border-colored(variables.$light-grey)
+  }
+
+  .border-white {
+    @include border-colored(variables.$black)
+  }
+
+  .border-medium-grey {
+    @include border-colored(variables.$dark-grey)
+  }
+
+  .border-dark-grey {
+    @include border-colored(variables.$light-grey)
+  }
+
+  .border-dark-red {
+    @include border-colored(variables.$light-red)
+  }
+
+  .border-light-red {
+    @include border-colored(variables.$dark-red)
+  }
+
+}

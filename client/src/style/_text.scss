@@ -1,0 +1,114 @@
+@use "variables";
+
+@mixin text-colored($color) {
+  color: $color;
+
+  &:link {
+    color: $color;
+  }
+
+  &:visited {
+    color: $color;
+  }
+
+  &:active {
+    color: $color;
+  }
+}
+
+.italic {
+  font-style: italic;
+}
+
+.crossed-out {
+  text-decoration: line-through;
+}
+
+.no-decoration {
+  text-decoration: none;
+}
+
+@each $color-name, $color-value in variables.$colors {
+  .text-#{$color-name} {
+    @include text-colored($color-value);
+  }
+}
+
+
+.dark-mode {
+
+  .text-black {
+    @include text-colored(variables.$white)
+  }
+
+  .text-white {
+    @include text-colored(variables.$black)
+  }
+
+  .text-medium-grey {
+    @include text-colored(variables.$dark-grey)
+  }
+  
+  .text-light-grey {
+    @include text-colored(variables.$dark-grey)
+  }
+
+  .text-dark-grey {
+    @include text-colored(variables.$light-grey)
+  }
+
+  .text-light-red {
+    @include text-colored(variables.$dark-red)
+  }
+
+  .text-dark-red {
+    @include text-colored(variables.$light-red)
+  }
+
+}
+
+@each $font-name, $font-value in variables.$fonts {
+  .#{$font-name} {
+    font-family: $font-value;
+  }
+}
+
+.text-small {
+  font-size: variables.$text-small;
+}
+
+.text-medium {
+  font-size: variables.$text-medium;
+}
+
+.text-large {
+  font-size: variables.$text-large;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.list-style-square {
+  list-style: square;
+
+  * {
+    list-style: square;
+  }
+}
+
+.list-style-decimal {
+  list-style: decimal;
+
+  * {
+    list-style: decimal;
+  }
+}

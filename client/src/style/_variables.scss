@@ -1,0 +1,118 @@
+// colors
+$black: #000;
+$dark-blue: #0000AA;
+$dark-green: #00AA00;
+$dark-cyan: #00AAAA;
+$dark-red: #AA0000;
+$dark-magenta: #AA00AA;
+$dark-yellow: #AA5500;
+$dark-grey: #444;
+$medium-grey: #555555;
+$light-blue: #5555FF;
+$light-green: #55FF55;
+$light-cyan: #55FFFF;
+$light-red: #FF5555;
+$light-magenta: #FF55FF;
+$light-yellow: #FFFF55;
+$light-grey: #aaa;
+$white: #FFF;
+$transparent: #0000;
+
+$colors: (
+"black": $black,
+"dark-blue": $dark-blue,
+"dark-green": $dark-green,
+"dark-cyan": $dark-cyan,
+"dark-red": $dark-red,
+"dark-magenta": $dark-magenta,
+"dark-yellow": $dark-yellow,
+"dark-grey": $dark-grey,
+"light-blue": $light-blue,
+"light-green": $light-green,
+"light-cyan": $light-cyan,
+"light-red": $light-red,
+"light-magenta": $light-magenta,
+"light-yellow": $light-yellow,
+"light-grey": $light-grey,
+"medium-grey": $medium-grey,
+"white": $white,
+"transparent": $transparent
+);
+
+// fonts
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Permanent+Marker&family=Syne+Mono&display=swap');
+
+$main-font: 'Syne Mono', monospace;
+$hand-written-font: 'Architects Daughter', cursive;
+$chalkboard-font: 'Permanent Marker', cursive;
+
+$fonts: (
+"main": $main-font,
+"hand-written": $hand-written-font,
+"chalkboard": $chalkboard-font
+);
+
+$text-small: 0.7em;
+$text-medium: 1em;
+$text-large: 1.4em;
+
+// body
+$body-padding: 1em;
+
+// standard gaps / margins / paddings / widths
+$spacing-small: 0.5em;
+$spacing-medium: 1em;
+$spacing-large: 2em;
+
+$spacings: (
+  "small": $spacing-small,
+  "medium": $spacing-medium,
+  "large": $spacing-large,
+);
+
+$standard-margin: $spacing-medium;
+$standard-border-width: 2px;
+
+// screen sizes
+$tiny-screen: 0px;
+$small-screen: 768px;
+$medium-screen: 992px;
+$large-screen: 1200px;
+$gigantic-screen: 1800px;
+
+$screen-sizes: (
+"tiny-screen": $tiny-screen,
+"small-screen": $small-screen,
+"medium-screen": $medium-screen,
+"large-screen": $large-screen,
+"gigantic-screen": $gigantic-screen
+);
+
+// lists
+$list-style: none;
+
+// buttons
+$icon-button-size: 1em;
+
+// inputs
+$color-transition-timing: color 0.3s;
+
+$button-margin: 0.1em;
+
+// checkboxes
+$checkbox-color: $black;
+$disabled-checkbox-color: $dark-grey;
+$checkbox-size: 1.2em;
+$checkbox-mark-size: 0.5em;
+$checkbox-border-width: 0.15em;
+
+// forms
+$input-label-margin-top: 0.5em;
+
+// toast
+$background-color-error: $dark-red;
+$text-color-error: $white;
+$border-color-error: $white;
+$background-color-success: $dark-grey;
+$text-color-success: $white;
+$border-color-success: $white;

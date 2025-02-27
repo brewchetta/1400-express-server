@@ -1,0 +1,47 @@
+@use "variables";
+
+.labeled-input-section {
+
+  input:not([type="checkbox"]), select {
+    display: block;
+    margin-top: variables.$input-label-margin-top;
+  }
+
+  label {
+    display: block;
+    margin-top: variables.$input-label-margin-top;
+    &:first-child {
+      margin-top: inherit;
+    }
+  }
+
+  input[type="checkbox"] + label {
+    display: inline;
+  }
+
+}
+
+// DARK MODE //
+//
+.App.dark-mode {
+  input:not([type="checkbox"]), select {
+    color: variables.$white;
+    border-color: variables.$white;
+  }
+
+  input[type="text"], input[type="number"], input[type="password"], input[type="email"] {
+    background-color: variables.$black;
+  }
+
+  input[type="submit"] {
+    background-color: variables.$dark-grey;
+  }
+  
+  label {
+    color: variables.$white;
+  }
+
+  input[type="checkbox"] {
+    color: variables.$white;
+  }
+}

@@ -33,7 +33,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(session({
-    secret: 'TODO-ADD-SECRET', // TODO: actually add the secret you silly billy
+    secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
@@ -51,18 +51,20 @@ app.use(cookieParser());
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const buildPath = path.normalize(path.join(__dirname, 'client'))
+const buildPath = path.normalize(path.join(__dirname, 'client/dist'))
 app.use(express.static(buildPath))
 
-app.use('/ancestries', ancestriesRouter);
-app.use('/characters', charactersRouter);
-app.use('/items', itemsRouter);
-app.use('/rituals', ritualsRouter);
-app.use('/spells', spellsRouter);
-app.use('/trainings', trainingsRouter);
-app.use('/users', usersRouter);
-app.use('/story-groups', storyGroupsRouter);
-app.use('/story-players', storyPlayersRouter);
+const BASE_URL = '/api'
+
+app.use(`${BASE_URL}/ancestries`, ancestriesRouter);
+app.use(`${BASE_URL}/characters`, charactersRouter);
+app.use(`${BASE_URL}/items`, itemsRouter);
+app.use(`${BASE_URL}/rituals`, ritualsRouter);
+app.use(`${BASE_URL}/spells`, spellsRouter);
+app.use(`${BASE_URL}/trainings`, trainingsRouter);
+app.use(`${BASE_URL}/users`, usersRouter);
+app.use(`${BASE_URL}/story-groups`, storyGroupsRouter);
+app.use(`${BASE_URL}/story-players`, storyPlayersRouter);
 
 app.use('/*', (req, res, next) => {
     if (/(.ico|.js|.css|.jpg|.png|.map|.svg)$/i.test(req.path)) {
