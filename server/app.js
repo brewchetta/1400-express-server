@@ -11,7 +11,6 @@ import cors from 'cors'
 import { MONGO_URL } from './mongo-config.js'
 import mongoose from './models/index.js'
 
-import indexRouter from './routes/index.js'
 import ancestriesRouter from './routes/ancestries.js'
 import charactersRouter from './routes/characters.js'
 import itemsRouter from './routes/items.js'
@@ -51,7 +50,7 @@ app.use(cookieParser());
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const buildPath = path.normalize(path.join(__dirname, 'client/dist'))
+const buildPath = path.normalize(path.join(__dirname, '../client/dist'))
 app.use(express.static(buildPath))
 
 const BASE_URL = '/api'
